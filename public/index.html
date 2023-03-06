@@ -1,0 +1,192 @@
+<!doctype html><html lang="en" data-bs-theme="dark"><head><meta charset="utf-8"><title>MIR4 Calc - 211 DS Salary</title><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"><style type="text/css">/* Disable highlighting and selection of text */
+		* {
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}</style></head><body class="bg-black"><nav class="navbar navbar-expand-md bg-body-tertiary bg-danger fixed-top"><div class="container-fluid"><a class="navbar-brand text-danger" href="#"><img src="./img/mir4-brand.png" alt="MIR4" height="24" class="d-inline-block align-text-top"> Calc </a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav"><li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li><li class="nav-item"><a class="nav-link disabled">Ally Stats (Upcoming!)</a></li><li class="nav-item"><a class="nav-link disabled">In-game Market (Coming soon)</a></li><li class="nav-item"><a class="nav-link disabled">Materials (Coming soon)</a></li></ul></div></div></nav><div class="container align-items-center" style="margin-top: 80px;"><div class="row"><div class="card justify-content-center col-12 col-lg-6 mb-5 mt-md-5 mt-lg-0"><div class="card-body"><form class="row g-3"><h2 class="text-center mb-0">名人堂-211 Darksteel Distribution</h2><span class="text-center text-primary mt-0">Input the number of participants per clan</span><div class="col-md-5"><img src="./img/icon-blackIron.webp" height="20"> <label for="totalDarksteelResources" class="form-label">Darksteel resources:</label></div><div class="col-md-7"><input type="number" class="form-control bg-dark-subtle" id="totalDarksteelResources" name="totalDarksteelResources" min="0" step="any" placeholder="40000000" value="0" required></div><div style="font-style: italic;" class="text-primary">Indicate the number of participants per ally clan:</div><div id="clan-container"></div></form></div></div><div class="col-12 col-lg-6 mb-md-5 mb-lg-0"><div class="card justify-content-center"><div class="row"><div class="col-12"><div class="card-body"><h2 class="text-center mb-0">Discord Template:</h2><span class="text-center text-primary mt-0 d-block">A text will be generated below. </span><textarea id="discordTemplate" class="form-control mt-3 bg-dark-subtle" style="resize: none; width: 100%; height: 200px;" placeholder="Copy the content that will be generated here"></textarea> <button class="btn btn-primary mb-3 mt-3 float-end" id="copyButton" onclick="copyClipboard()"><i class="far fa-clipboard me-2"></i> <span id="copyButtonSpan">Copy</span></button> <span style="font-style: italic" class="">Send it to approriate discord channel!!</span></div></div></div></div></div></div></div><script type="module">import{initializeApp}from"https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";import{getAnalytics}from"https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";const firebaseConfig={apiKey:"AIzaSyDbRUuIY0_4ItfgYpKrAyoHcCg7Uxd2cpY",authDomain:"mir4-26fc8.firebaseapp.com",projectId:"mir4-26fc8",storageBucket:"mir4-26fc8.appspot.com",messagingSenderId:"360123248836",appId:"1:360123248836:web:09fc1047edac3acee1d991",measurementId:"G-SEM4226YF7"},
+	
+	// Initialize Firebase
+	app=initializeApp(firebaseConfig), analytics=getAnalytics(app);</script><script type="text/javascript">const clanNames = {
+		'PKDynasty名人堂': 0,
+		'名人堂丨VN Chill': 0,
+		'名人堂Kraken PH': 0,
+		'名人堂丶S1': 0,
+		'名人堂丶MIND G': 0,
+		'名人堂丶CBL': 0,
+		'名人堂丶AGIK': 0,
+		'名人堂丶LZD': 0,
+		'名人堂丶Monarch': 0
+	};
+
+	const clanContainer = document.getElementById("clan-container");
+	const clanNamesKeys = Object.keys(clanNames);
+	for (let i = 0; i < clanNamesKeys.length; i++) {
+		const clanName = clanNamesKeys[i];
+		const clanName4class = clanName.replace(/[^a-zA-Z0-9]/g, "");
+		const div = document.createElement("div");
+		div.classList.add("row");
+		div.classList.add("mb-3");
+		div.innerHTML = `
+			<div class="col-md-4">
+				<label for="${clanName4class}" class="form-label text-primary"><b>${clanName}</b>:</label>	
+				<div class="${clanNames[clanName] === 1 ? `d-inline` : `d-none`}">
+					<input type='checkbox' id="${clanName4class}-cb" name="${clanName4class}-cb" value="newClan">
+					<label for="${clanName4class}-cb">New <span class="text-danger">(-30%)</span></label>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<input placeholder="25" type="number" class="form-control clans bg-dark-subtle" id="${clanName4class}" name="${clanName4class}"
+					min="0" step="any" value='0' required>
+			</div>
+
+			<div class="col-md-5 text-md-end">
+				<span class="${clanName4class}-ds2receive" >0</span> 
+				<img src="./img/icon-blackIron.webp" height="20">
+			</div>
+		`;
+		clanContainer.appendChild(div);
+	}
+
+	// whenever you have the value of #totalDarksteelResources, you can calculate the amount of darksteel each clan will receive
+	const totalDarksteelResources = document.getElementById("totalDarksteelResources");
+	const clans = document.getElementsByClassName("clans");
+	const ds2receive = document.getElementsByClassName("ds2receive");
+
+
+	function computeDarksteelContribution() {
+		// if totalDarksteelResources is empty, change the input value to 0
+		if (totalDarksteelResources.value === "" || totalDarksteelResources.value < 0) {
+			totalDarksteelResources.value = 0;
+		}
+
+		// strip 0 from the beginning of the totalDarksteelResources.value, change the input
+		if (totalDarksteelResources.value.startsWith("0") && totalDarksteelResources.value.length > 1) {
+			totalDarksteelResources.value = totalDarksteelResources.value.replace(/^0+/, "");
+		}
+
+		let totalDarksteelResourcesValue = parseFloat(totalDarksteelResources.value);
+
+		// first get all total number of participants of all clans
+		let totalParticipants = 0; // Dev NOTE: Not the actual number of participants because some clans are new which is assumed to have 70% of the number of participants
+
+		for (let i = 0; i < clans.length; i++) {
+			const clan = clans[i];
+
+			// if the clan value is empty, change the input value to 0
+			if (clan.value === "" || clan.value < 0) {
+				clan.value = 0;
+			}
+
+			// if the clan value exceeds 50, change the input value to 50
+			if (clan.value > 100) {
+				clan.value = 100;
+			}
+
+
+			// strip 0 from the beginning of the clan.value, change the input
+			if (clan.value.startsWith("0") && clan.value.length > 1) {
+				clan.value = clan.value.replace(/^0+/, "");
+			}
+
+
+			const clanValue = parseFloat(clan.value);
+
+			// if the clan is new, then the number of participants will be 70% of the number of participants
+			const newClan = document.getElementById(`${clan.name}-cb`);
+			if (newClan.checked) {
+				totalParticipants += Math.floor(clanValue * 0.7);
+				continue;
+			}
+
+			totalParticipants += Math.floor(clanValue);
+		}
+
+		// Divide totalDarksteelResourcesValue by the number of participants to get the amount of darksteel each participant will receive
+		const ds2receivePerParticipant = totalDarksteelResourcesValue / totalParticipants;
+
+		// change the value of #discordTemplate textarea
+		const discordTemplate = document.getElementById("discordTemplate");
+
+		// Put comma separator for totalDarksteelResourcesValue
+		totalDarksteelResourcesValue = totalDarksteelResourcesValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+		let discordTemplateValue = `The clan distribution for ${totalDarksteelResourcesValue} DS will be as follows:`;
+
+
+		// loop through all clans and calculate the amount of darksteel each clan will receive
+		for (let i = 0; i < clans.length; i++) {
+			const clan = clans[i];
+			const clanName = clan.name;
+			const clanName4class = clanName.replace(/[^a-zA-Z0-9]/g, "");
+			const ds2receiveElement = document.getElementsByClassName(`${clanName4class}-ds2receive`)[0];
+
+			// if the clan is new, then the number of participants will be 70% of the number of participants. Therefore clanValue will be 70% of the number of participants
+			const newClan = document.getElementById(`${clan.name}-cb`);
+
+			let clanValue = parseFloat(clan.value);
+
+			if (newClan.checked) {
+				clanValue = Math.floor(clanValue * 0.7);
+			}
+
+			if (clan.value < 1) {
+				ds2receiveElement.innerHTML = 0;
+				continue;
+			}
+
+			let ds2receiveValue = clanValue * ds2receivePerParticipant;
+			ds2receiveValue = Math.floor(ds2receiveValue);
+
+			// put comma separator for ds2receiveValue
+			ds2receiveValue = ds2receiveValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+			ds2receiveElement.innerHTML = ds2receiveValue;
+
+			discordTemplateValue += `\n* ${clanNamesKeys[i]} (${parseInt(clan.value)} Participants): ${ds2receiveValue} DS`;
+		}
+
+		discordTemplate.value = discordTemplateValue;
+	}
+
+	totalDarksteelResources.addEventListener("input", computeDarksteelContribution);
+
+	for (let i = 0; i < clans.length; i++) {
+		// whenever you have the value of #clans, you can calculate the amount of darksteel each clan will receive by using computeDarksteelContribution()
+		const clan = clans[i];
+		clan.addEventListener("input", computeDarksteelContribution);
+
+		// whenever you have the value of #newClan, you can calculate the amount of darksteel each clan will receive by using computeDarksteelContribution()
+		const clanName = clan.name;
+		const clanName4class = clanName.replace(/[^a-zA-Z0-9]/g, "");
+		const newClan = document.getElementById(`${clanName4class}-cb`);
+		newClan.addEventListener("input", computeDarksteelContribution);
+	}</script><script type="text/javascript">// add a click event listener to #copyButton
+	const copyButton = document.getElementById("copyButton");
+
+	function copyClipboard() {
+		// copy the text inside #discordTemplate to clipboard
+		const copyText = document.getElementById('discordTemplate');
+		copyText.select();
+		copyText.setSelectionRange(0, 99999);
+		document.execCommand("copy");
+
+		// change the text inside this button within span tag to "Copied!"
+		const span = document.getElementById("copyButtonSpan");
+		span.innerHTML = "Copied!";
+
+		// temporay disable the button
+		copyButton.disabled = true;
+
+
+		// change the text inside this button within span tag back to "Copy" after 2 seconds
+		setTimeout(function () {
+			span.innerHTML = "Copy";
+			copyButton.disabled = false;
+		}, 1500);
+
+
+	}</script></body></html>
