@@ -1,11 +1,15 @@
 <div class="container align-items-center" style="margin-top: 80px;">
+
+	<h1 class="text-center mb-5">[211] 名人堂</h1>
+
 	<div class="row">
 		<div class="card justify-content-center col-12 col-lg-6 mb-5 mt-md-5 mt-lg-0">
 			<div class="card-body">
 				<form class="row g-3">
-					<h2 class="text-center mb-0">名人堂-211 Darksteel Distribution</h2>
-					<span class="text-center text-primary mt-0">Input the number of participants per clan</span>
-
+					
+					<h2 class="text-center mb-0">
+						Fund Distribution
+					</h2>
 					<div class="col-md-5">
 						<img src="./img/icon-blackIron.webp" height="20">
 						<label for="totalDarksteelResources" class="form-label">Darksteel resources:</label>
@@ -15,8 +19,11 @@
 							name="totalDarksteelResources" min="0" step="any" placeholder="40000000" value="0" required>
 
 					</div>
-					<div style="font-style: italic;" class="text-primary">Indicate the number of participants per
-						ally clan:</div>
+
+					<div class="alert alert-info" role="alert">
+						<div style="font-style: italic;">Indicate the number of participants per
+							ally clan:</div>
+					</div>
 					<div id="clan-container">
 
 					</div>
@@ -30,8 +37,10 @@
 
 					<div class="col-12">
 						<div class="card-body">
-							<h2 class="text-center mb-0">Discord Template:</h2>
-							<span class="text-center text-primary mt-0 d-block">A text will be generated below. </span>
+							<h2 class="text-center mb-0">
+								<img src="./img/discord-icon.svg" height="38"> Discord Template
+							</h2>
+							<span class="text-center mt-0 d-block">A text will be generated below. </span>
 
 							<!-- Texarea that has 100% width, 200px height and does not resize -->
 							<textarea id="discordTemplate" class="form-control mt-3 bg-dark-subtle"
@@ -58,10 +67,10 @@
 </div>
 
 <script type="module">
-	import{initializeApp}from"https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";import{getAnalytics}from"https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";const firebaseConfig={apiKey:"AIzaSyDbRUuIY0_4ItfgYpKrAyoHcCg7Uxd2cpY",authDomain:"mir4-26fc8.firebaseapp.com",projectId:"mir4-26fc8",storageBucket:"mir4-26fc8.appspot.com",messagingSenderId:"360123248836",appId:"1:360123248836:web:09fc1047edac3acee1d991",measurementId:"G-SEM4226YF7"},
-	
-	// Initialize Firebase
-	app=initializeApp(firebaseConfig), analytics=getAnalytics(app);
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"; import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js"; const firebaseConfig = { apiKey: "AIzaSyDbRUuIY0_4ItfgYpKrAyoHcCg7Uxd2cpY", authDomain: "mir4-26fc8.firebaseapp.com", projectId: "mir4-26fc8", storageBucket: "mir4-26fc8.appspot.com", messagingSenderId: "360123248836", appId: "1:360123248836:web:09fc1047edac3acee1d991", measurementId: "G-SEM4226YF7" },
+
+		// Initialize Firebase
+		app = initializeApp(firebaseConfig), analytics = getAnalytics(app);
 </script>
 
 <script type="text/javascript">
@@ -87,7 +96,7 @@
 		div.classList.add("mb-3");
 		div.innerHTML = `
 			<div class="col-md-4">
-				<label for="${clanName4class}" class="form-label text-primary"><b>${clanName}</b>:</label>	
+				<label for="${clanName4class}" class="form-label bg-primary-subtle p-2 rounded-2"><b>${clanName}</b>:</label>	
 				<div class="${clanNames[clanName] === 1 ? `d-inline` : `d-none`}">
 					<input type='checkbox' id="${clanName4class}-cb" name="${clanName4class}-cb" value="newClan">
 					<label for="${clanName4class}-cb">New <span class="text-danger">(-30%)</span></label>
@@ -95,8 +104,8 @@
 			</div>
 
 			<div class="col-md-3">
-				<input placeholder="25" type="number" class="form-control clans bg-dark-subtle" id="${clanName4class}" name="${clanName4class}"
-					min="0" step="any" value='0' required>
+				<input placeholder="25" type="number" class="bg-dark-subtle border-primary clans form-control" id="${clanName4class}" name="${clanName4class}"
+					min="0" step="any" value='0' required style="border: 0; border-bottom: 1px solid;">
 			</div>
 
 			<div class="col-md-5 text-md-end">
