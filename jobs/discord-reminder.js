@@ -37,6 +37,10 @@ DiscordClient.on('ready', async () => {
     }
 
 
+    // Import discord-reminder.config.json
+    const cronSchedules = require('../jobs/discord-reminder.config.json');
+
+
     // interval every 5 minutes
     setInterval(async () => {
         // check the current time in utc+8
@@ -45,20 +49,17 @@ DiscordClient.on('ready', async () => {
         const utc8Date = new Date(utc8);
         const utc8Hour = utc8Date.getHours();
         const utc8Minute = utc8Date.getMinutes();
-        const utc8Second = utc8Date.getSeconds();
 
+        
+        // loop through the config but limit the ram usage
+        for (let i = 0; i < cronSchedules.length; i++) {
+            const { timeHour, timeMinute, message } = cronSchedules[i];
 
-        // check if the time is 9 21 pm of utc+8
-        if (utc8Hour === 21 && utc8Minute === 42) {
-            channel.send(":fire: Attention @everyone, the war in the valley is about to begin in less than 30 minutes. Kindly ensure that **the UA arrangements are in place**. :muscle:\n\n :bomb: While the battle rages on, please** take a screenshot to show your members** are present inside the valley. :camera_with_flash:\n\n:microphone2: Please **enter the appropriate voice channel** for real-time communication.\n\n:four_leaf_clover: Good luck to everyone! :fingers_crossed:");
+            if (utc8Hour === timeHour && utc8Minute === timeMinute) {
+                channel.send(message);
+            }
         }
-
-        // check if the time is 10pm of utc+8
-        if (utc8Hour === 22 && utc8Minute === 0) {
-            channel.send(":fire: Attention @everyone, the war in the valley is now __ONGOING~__\n\n :bomb: While the battle rages on, please don't forget to** take a screenshot to show your members** are present inside the valley. :camera_with_flash: \n\n :microphone2: Please **enter the appropriate voice channel** for real-time communication.\n\n :four_leaf_clover: Good luck to everyone! :fingers_crossed:");
-        }
-
-    }, 1000 * 60 * 1);
+    }, 1000 * 60 * 5); // should be 5 minutes
 });
 
 // Log our bot in using the token from https://discord.com/developers/applications

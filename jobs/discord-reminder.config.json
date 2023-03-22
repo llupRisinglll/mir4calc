@@ -1,9 +1,49 @@
 [
-    {
-        "message": "Valley war will start in 30 minutes~. Come join us!",
-        "time": 21
-    }
 
+    {
+        "title": "Labyrinth BOSS Reminder - 10 minutes before [10 AM]",
+        "message": ":mega: Attention everyone! :rotating_light: In just 10 minutes, the **Labyrinth World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
+        "timeHour": 9,
+        "timeMinute": 50
+    },
+    
+    {
+        "title": "Valley BOSS Reminder - 10 minutes before [12 PM]",
+        "message": ":mega: Attention everyone! :rotating_light: In just 10 minutes, the **Valley World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
+        "timeHour": 12,
+        "timeMinute": 0
+    },
+
+
+    {
+        "title": "Labyrinth BOSS Reminder - 10 minutes before [8 PM]",
+        "message": ":mega: Attention everyone! :rotating_light: In just 10 minutes, the **Labyrinth World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
+        "timeHour": 19,
+        "timeMinute": 50
+    },
+
+    {
+        "title": "Valley War Reminder - 30 minutes before [10 PM]",
+        "message": ":fire: Attention @everyone, the war in the valley is about to begin in less than 30 minutes. Kindly ensure that **the UA arrangements are in place**. :muscle:\n\n :bomb: While the battle rages on, please** take a screenshot to show your members** are present inside the valley. :camera_with_flash:\n\n:microphone2: Please **enter the appropriate voice channel** for real-time communication.\n\n:four_leaf_clover: Good luck to everyone! :fingers_crossed:",
+        "timeHour": 21,
+        "timeMinute": 30
+    },
+
+    
+    {
+        "title": "Valley BOSS Reminder - 10 minutes before [10 PM]",
+        "message": ":mega: Attention everyone! :rotating_light: In just 10 minutes, the **Valley World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
+        "timeHour": 21,
+        "timeMinute": 50
+    },
+
+
+    {
+        "title": "Valley War ONGOING @ [10PM]",
+        "message": ":fire: Attention @everyone, the war in the valley is now __ONGOING~__\n\n :bomb: While the battle rages on, please don't forget to** take a screenshot to show your members** are present inside the valley. :camera_with_flash: \n\n :microphone2: Please **enter the appropriate voice channel** for real-time communication.\n\n :four_leaf_clover: Good luck to everyone! :fingers_crossed:",
+        "timeHour": 22,
+        "timeMinute": 1
+    }
 
 
 ]
