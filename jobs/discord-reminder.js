@@ -27,6 +27,7 @@ const DiscordClient = new Client({
 
 
 DiscordClient.on('ready', async () => {
+    
     const channelId = '957557291207499837'; // Replace with known channel ID
     const channel = DiscordClient.channels.cache.get(channelId);
 
@@ -50,6 +51,7 @@ DiscordClient.on('ready', async () => {
         const utc8Hour = utc8Date.getHours();
         const utc8Minute = utc8Date.getMinutes();
 
+        console.log("Checking jobs for the time", utc8Hour, utc8Minute);
         
         // loop through the config but limit the ram usage
         for (let i = 0; i < cronSchedules.length; i++) {
@@ -57,9 +59,26 @@ DiscordClient.on('ready', async () => {
 
             if (utc8Hour === timeHour && utc8Minute === timeMinute) {
                 channel.send(message);
+                console.log("Sent message", message);
             }
         }
-    }, 1000 * 60 * 5); // should be 5 minutes
+    }, 1000 * 60 * 1); // should be 1 minutes
+
+    // start an express server
+    const express = require('express');
+    const app = express();
+
+
+    app.get('*', (req, res) => {
+        res.send('Hello World!');
+    });
+
+    // start the server
+    app.listen(8080, () => {
+        console.log('Server started on port 3000');
+    });
+
+    
 });
 
 // Log our bot in using the token from https://discord.com/developers/applications
