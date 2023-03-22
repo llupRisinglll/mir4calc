@@ -43,14 +43,14 @@
         "message": ":fire: Attention @everyone, the war in the valley is now __ONGOING~__\n\n :bomb: While the battle rages on, please don't forget to** take a screenshot to show your members** are present inside the valley. :camera_with_flash: \n\n :microphone2: Please **enter the appropriate voice channel** for real-time communication.\n\n :four_leaf_clover: Good luck to everyone! :fingers_crossed:",
         "timeHour": 22,
         "timeMinute": 1
-    }
+    },
 
 
     {
         "title": "Valley War ONGOING @ [10PM]",
         "message": ":fire:",
         "timeHour": 0,
-        "timeMinute": 15
+        "timeMinute": 20
     }
 
 ]
