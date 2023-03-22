@@ -37,22 +37,24 @@ function renderFile(file) {
 // Function to get data for an EJS file from its corresponding JSON file
 function getData(file) {
 	const jsonPath = path.join(viewsDir, `${file.replace('.ejs', '')}.json`);
+	
+	let data = {
+		pageTitle: "" // Default page title
+	};
 	if (fs.existsSync(jsonPath)) {
-		const data = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
-
-		data.include = (file, options) => {
-			const includePath = path.join(viewsDir, file);
-			const includeData = getData(file);
-			console.log(fs.readFileSync(includePath, 'utf8'));
-
-			return ejs.render(setVariable(fs.readFileSync(includePath, 'utf8')), Object.assign({}, includeData, options));
-		};
-
-		return data;
-	} else {
-		console.warn(`No data found for ${file}`);
-		return {};
+		data = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
 	}
+
+	data.include = (file, options) => {
+		const includePath = path.join(viewsDir, file);
+		const includeData = getData(file);
+		console.log(fs.readFileSync(includePath, 'utf8'));
+
+		return ejs.render(setVariable(fs.readFileSync(includePath, 'utf8')), Object.assign({}, includeData, options));
+	};
+
+	return data;
+
 }
 
 
