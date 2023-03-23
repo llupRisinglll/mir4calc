@@ -10,8 +10,8 @@
     {
         "title": "Valley BOSS Reminder - 10 minutes before [12 PM]",
         "message": ":mega: Attention @everyone! :rotating_light: In just 10 minutes, the **Valley World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
-        "timeHour": 12,
-        "timeMinute": 0
+        "timeHour": 11,
+        "timeMinute": 50
     },
 
 
