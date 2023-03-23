@@ -2,14 +2,14 @@
 
     {
         "title": "Labyrinth BOSS Reminder - 10 minutes before [10 AM]",
-        "message": ":mega: Attention everyone! :rotating_light: In just 10 minutes, the **Labyrinth World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
+        "message": ":mega: Attention @everyone! :rotating_light: In just 10 minutes, the **Labyrinth World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
         "timeHour": 9,
         "timeMinute": 50
     },
     
     {
         "title": "Valley BOSS Reminder - 10 minutes before [12 PM]",
-        "message": ":mega: Attention everyone! :rotating_light: In just 10 minutes, the **Valley World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
+        "message": ":mega: Attention @everyone! :rotating_light: In just 10 minutes, the **Valley World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
         "timeHour": 12,
         "timeMinute": 0
     },
@@ -17,7 +17,7 @@
 
     {
         "title": "Labyrinth BOSS Reminder - 10 minutes before [8 PM]",
-        "message": ":mega: Attention everyone! :rotating_light: In just 10 minutes, the **Labyrinth World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
+        "message": ":mega: Attention @everyone! :rotating_light: In just 10 minutes, the **Labyrinth World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
         "timeHour": 19,
         "timeMinute": 50
     },
@@ -33,7 +33,7 @@
     
     {
         "title": "Valley BOSS Reminder - 10 minutes before [10 PM]",
-        "message": ":mega: Attention everyone! :rotating_light: In just 10 minutes, the **Valley World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
+        "message": ":mega: Attention @everyone! :rotating_light: In just 10 minutes, the **Valley World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
         "timeHour": 21,
         "timeMinute": 50
     },
@@ -50,7 +50,7 @@
 
     {
         "title": "Living Wraith @ [10PM] - Thursday",
-        "message": ":mega: Attention everyone! :rotating_light: In just 10 minutes, the **Living Wraith** in the valley will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to defend the altar, everyone must be ready to participate and prioritize it. :muscle:",
+        "message": ":mega: Attention @everyone! :rotating_light: In just 10 minutes, the **Living Wraith** in the valley will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to defend the altar, everyone must be ready to participate and prioritize it. :muscle:",
         "timeHour": 22,
         "timeMinute": 0,
         "day": 5
