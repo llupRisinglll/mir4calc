@@ -23,10 +23,11 @@
     },
 
     {
-        "title": "Valley War Reminder - 30 minutes before [10 PM]",
+        "title": "Valley War Reminder - 30 minutes before [10 PM] - Wednesday",
         "message": ":fire: Attention @everyone, the war in the valley is about to begin in less than 30 minutes. Kindly ensure that **the UA arrangements are in place**. :muscle:\n\n :bomb: While the battle rages on, please** take a screenshot to show your members** are present inside the valley. :camera_with_flash:\n\n:microphone2: Please **enter the appropriate voice channel** for real-time communication.\n\n:four_leaf_clover: Good luck to everyone! :fingers_crossed:",
         "timeHour": 21,
-        "timeMinute": 30
+        "timeMinute": 30,
+        "day": 4
     },
 
     
@@ -39,10 +40,20 @@
 
 
     {
-        "title": "Valley War ONGOING @ [10PM]",
+        "title": "Valley War ONGOING @ [10PM] - Wednesday",
         "message": ":fire: Attention @everyone, the war in the valley is now __ONGOING~__\n\n :bomb: While the battle rages on, please don't forget to** take a screenshot to show your members** are present inside the valley. :camera_with_flash: \n\n :microphone2: Please **enter the appropriate voice channel** for real-time communication.\n\n :four_leaf_clover: Good luck to everyone! :fingers_crossed:",
         "timeHour": 22,
-        "timeMinute": 0
+        "timeMinute": 0,
+        "day": 4 
+    },
+
+
+    {
+        "title": "Living Wraith @ [10PM] - Thursday",
+        "message": ":mega: Attention everyone! :rotating_light: In just 10 minutes, the **Living Wraith** in the valley will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to defend the altar, everyone must be ready to participate and prioritize it. :muscle:",
+        "timeHour": 22,
+        "timeMinute": 0,
+        "day": 5
     }
 
 ]

@@ -55,9 +55,22 @@ DiscordClient.on('ready', async () => {
         
         // loop through the config but limit the ram usage
         for (let i = 0; i < cronSchedules.length; i++) {
-            const { timeHour, timeMinute, message } = cronSchedules[i];
+            const { timeHour, timeMinute, message, day } = cronSchedules[i];
 
             if (utc8Hour === timeHour && utc8Minute === timeMinute) {
+
+
+                // if day is defined, check if the day is the same as the current day before sending the message
+                if (typeof day !== 'undefined' && day !== null && day < 7 && day >= 1) 
+                {
+                    const utc8Day = utc8Date.getDay() + 1;  // 0 is sunday, 1 is monday, 2 is tuesday, 3 is wednesday, 4 is thursday, 5 is friday, 6 is saturday
+                    
+                    // check if the current utc day matched day in config
+                    if (utc8Day !== day) {
+                        continue;
+                    }
+                }
+
                 channel.send(message);
                 console.log("Sent message", message);
             }
