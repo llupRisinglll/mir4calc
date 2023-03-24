@@ -38,9 +38,25 @@ DiscordClient.on('ready', async () => {
     }
 
 
-    // Import discord-reminder.config.json
-    const cronSchedules = require('../jobs/discord-reminder.config.json');
-
+    // Import the DISCORD schedules JSON
+    let cronSchedules;
+    let tries = 0;
+    const maxTries = 10;
+    
+    while (tries < maxTries) {
+      try {
+        cronSchedules = require('../jobs/discord-reminder.config.json');
+        break;
+      } catch (err) {
+        tries++;
+        console.error(`Error parsing JSON file, attempt ${tries}/${maxTries}:`, err);
+      }
+    }
+    
+    if (!cronSchedules) {
+      console.error(`Unable to parse JSON file after ${maxTries} attempts, exiting...`);
+      process.exit(1);
+    }
 
     // interval every 5 minutes
     setInterval(async () => {
