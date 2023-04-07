@@ -138,11 +138,11 @@ app.post("/api/v1/auth", async (req, res) => {
 });
 
 app.post("/api/v1/apply", async (req, res) => {
-    
+
     const { roleId, token } = req.body;
 
     // import FactionApplications
-    const FactionApplications = require('./FactionApplications');
+    const FactionApplications = require('./schema/FactionApplications');
 
     const factionApplications = new FactionApplications({
         discordId: '1234567890',
