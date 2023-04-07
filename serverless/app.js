@@ -148,7 +148,8 @@ app.get("/api/v1/applications", auth, async (req, res) => {
 
     // get applications and return array of applications roleIds
     const applications = await FactionApplications.find({
-        discordId: userDetail.user.id
+        discordId: userDetail.user.id,
+        serverId: PKDServer
     }).select('roleId -_id');
 
     // reformat the applications array to be an array of roleId
@@ -168,6 +169,7 @@ app.post("/api/v1/apply", auth, async (req, res) => {
 
     // Check if discordId with roleId already exists
     const existingApplication = await FactionApplications.findOne({
+        serverId: PKDServer,
         discordId: userDetail.user.id,
         roleId: faction
     });
@@ -184,7 +186,8 @@ app.post("/api/v1/apply", auth, async (req, res) => {
         discordId: userDetail.user.id,
         discordUsername: userDetail.user.username,
         discordDiscriminator: userDetail.user.discriminator,
-        roleId: faction
+        roleId: faction,
+        serverId: PKDServer
     });
 
     try {

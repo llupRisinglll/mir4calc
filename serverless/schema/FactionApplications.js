@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 
 const ApplicationSchema = new mongoose.Schema({
+    serverId: {
+        type: String,
+        required: true,
+    },
     // Discord ID of the user who submitted the application
     discordId: {
         type: String,
