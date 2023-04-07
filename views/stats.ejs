@@ -55,7 +55,11 @@
                 
                 <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                     <div class="row">
-                        Loading...
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
@@ -78,86 +82,105 @@
 
 
 <script type="text/javascript">
+    let userDetails = localStorage.getItem("userDetails");
+    userDetails = JSON.parse(userDetails);
 
-    // using axios, get json from /json/factions.json
-    
-    axios.get('/json/factions.json')
-        .then(function (response) {
-
-            const template = `
-                <div class="col-6" >
-                    <div class="card justify-content-center mb-2">
-                        <div class="card-body">
-                            <h2 class="mb-0 text-center">
-                                <span> {{CLAN_NAME}}</span>
-                            </h2>
-
-                            <div>{{DESCRIPTION}}</div>
-
-                            <div class="float-end mt-3 members-count">
-                                {{MEMBERS-COUNT}} members
-                            </div>
-                            <!-- Click the button to copy the text inside the textarea. Put approriate bootstrap class with clipboard icon.-->
-                            <button class="btn btn-primary mb-3 mt-3 float-start applicationButton" data-id="{{ROLE_ID}}">
-                                <i class="far fa-clipboard me-2"></i> <span class="applicationText">Apply</span>
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-            `;
-
-
-            // loop through the response.data and append to #v-pills-profile
-            response.data.forEach(function(faction, i) {
-
-                //remove loading...
-                if (i === 0){
-                    document.querySelector("#v-pills-profile>div").innerHTML = "";
-
-                }
-                let newTemplate = template;
-
-                newTemplate = newTemplate.replace("{{CLAN_NAME}}", faction.name);
-                newTemplate = newTemplate.replace("{{ROLE_ID}}", faction.roleid);
-                
-                // Replace the description
-                if (faction.hasOwnProperty("description") && faction.description.length > 0){
-                    if (faction.description.length > 100) {
-                        newTemplate = newTemplate.replace("{{DESCRIPTION}}", faction.description.substring(0, 100) + "...");
-                    }else{
-                        newTemplate = newTemplate.replace("{{DESCRIPTION}}", faction.description);
-                    }
-
-                }else{
-                    newTemplate = newTemplate.replace("{{DESCRIPTION}}", "No description");
-                }
-
-
-                // Replace the members count
-                if (faction.hasOwnProperty("members") && faction.members.length > 0){
-                    newTemplate = newTemplate.replace("{{MEMBERS-COUNT}}", faction.members.length);
-                }else{
-                    newTemplate = newTemplate.replace("{{MEMBERS-COUNT}}", "0");
-                }
-                
-            
-
-                console.log(faction);
-                document.querySelector("#v-pills-profile>div").innerHTML += newTemplate;
+    (async () => {
+        const endPoint = '//mir4-serverless.appspot.com/api/v1/applications';
+        
+        try {
+            const applications = await axios.get(endPoint, {
+                headers: { 'x-access-token': userDetails.token}
             });
 
+            
+            const factions = await axios.get('/json/factions.json');
 
-            // handle success
-            console.log(response.data);
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .then(function () {
-            // always executed
-        });
+            const template = `
+                    <div class="col-6" >
+                        <div class="card justify-content-center mb-2">
+                            <div class="card-body">
+                                <h2 class="mb-0 text-center">
+                                    <span> {{CLAN_NAME}}</span>
+                                </h2>
+
+                                <div>{{DESCRIPTION}}</div>
+
+                                <div class="float-end mt-3 members-count">
+                                    {{MEMBERS-COUNT}} members
+                                </div>
+                                <!-- Click the button to copy the text inside the textarea. Put approriate bootstrap class with clipboard icon.-->
+                                <button class="btn btn-primary mb-3 mt-3 float-start applicationButton" data-id="{{ROLE_ID}}">
+                                    <i class="far fa-clipboard me-2"></i> <span class="applicationText">Apply</span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+
+                // loop through the response.data and append to #v-pills-profile
+                factions.data.forEach(function(faction, i) {
+
+                    // document.queryselector from template variable
+                    document.querySelector
+
+                    console.log();
+
+                    //remove loading...
+                    if (i === 0){
+                        document.querySelector("#v-pills-profile>div").innerHTML = "";
+
+                    }
+                    let newTemplate = template;
+
+                    newTemplate = newTemplate.replace("{{CLAN_NAME}}", faction.name);
+                    newTemplate = newTemplate.replace("{{ROLE_ID}}", faction.roleid);
+                    
+                    // Replace the description
+                    if (faction.hasOwnProperty("description") && faction.description.length > 0){
+                        if (faction.description.length > 100) {
+                            newTemplate = newTemplate.replace("{{DESCRIPTION}}", faction.description.substring(0, 100) + "...");
+                        }else{
+                            newTemplate = newTemplate.replace("{{DESCRIPTION}}", faction.description);
+                        }
+
+                    }else{
+                        newTemplate = newTemplate.replace("{{DESCRIPTION}}", "No description");
+                    }
+
+
+                    // Replace the members count
+                    if (faction.hasOwnProperty("members") && faction.members.length > 0){
+                        newTemplate = newTemplate.replace("{{MEMBERS-COUNT}}", faction.members.length);
+                    }else{
+                        newTemplate = newTemplate.replace("{{MEMBERS-COUNT}}", "0");
+                    }
+                    
+                
+
+                    console.log(faction);
+                    document.querySelector("#v-pills-profile>div").innerHTML += newTemplate;
+
+
+                    // if faction.roleid is in applications.data.applications, then change the button text to "Cancel Application"
+                    if (applications.data.applications.includes(faction.roleid)){
+                        document.querySelector(`[data-id="${faction.roleid}"]`).classList = "btn btn-warning mb-3 mt-3 float-start cancelApplicationButton";
+                        document.querySelector(`[data-id="${faction.roleid}"]`).querySelector(".applicationText").innerHTML = "Cancel Application";
+
+                        // change the icon to fa-times
+                        document.querySelector(`[data-id="${faction.roleid}"]`).querySelector("i").classList = "fa fa-times me-2";
+                    }
+
+                });
+            
+        } catch (error) {
+            window.showToast("Something went wrong. Please refresh the page!");
+            return;
+        }
+
+    })();
 
 
 
@@ -171,19 +194,12 @@
         const parent = target.parentElement;
 
         // if event.target is not a button, then it's a child of a button
-        if (target.tagName !== "BUTTON"){
-
-            if (parent && parent.tagName === 'BUTTON') {
-                target = parent;
-            }
-
+        if (target.tagName !== "BUTTON" && parent && parent.tagName === 'BUTTON'){
+            target = parent;
         }
 
 
         if (target.matches(".applicationButton")) {
-
-            let userDetails = localStorage.getItem("userDetails");
-            userDetails = JSON.parse(userDetails);
             
             const endPoint = '//mir4-serverless.appspot.com/api/v1/apply';
             const dataId = target.getAttribute("data-id");
@@ -236,9 +252,6 @@
                 // always executed
             });
 
-
-
-        
         }
 
         // check if the clicked element has class cancelApplicationButton

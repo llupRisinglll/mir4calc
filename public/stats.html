@@ -6,85 +6,105 @@
 			-moz-user-select: none;
 			-ms-user-select: none;
 			user-select: none;
-		}</style></head><body class="bg-body-tertiary"><nav class="navbar navbar-expand-md bg-body fixed-top"><div class="container-fluid"><a class="navbar-brand text-danger" href="/"><img src="./img/mir4-brand.png" alt="MIR4" height="24" class="d-inline-block align-text-top"> Calc </a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" aria-current="page" href="/">Home</a></li><li class="nav-item"><a class="nav-link active" href="/stats.html">Management(Beta)</a></li><li class="nav-item"><a class="nav-link disabled">In-game Market (Coming soon)</a></li><li class="nav-item"><a class="nav-link disabled">Materials (Coming soon)</a></li></ul></div><div class="btn-group d-none" id="acctDetails"><button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><span><img id="acctAvatar" src="./img/discord-icon.svg" alt="Avatar" class="rounded-5" height="35"></span></button><ul class="dropdown-menu dropdown-menu-end"><span class="pt-2 d-block text-center">Logged in as: </span><span class="p-2 d-block text-center text-danger"><b id="acctNick">Nickname</b></span> <span class="pl-2 pb-2 pr-2 d-block text-center text-secondary"><small id="acctUsername">Username#1234</small></span><li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="/logout.html"><i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a></li></ul></div><span class="navbar-text d-none" id="loginDetails"><a href="/login.html" class="bg-dark-subtle border-2 btn btn-dark"><span class="d-inline"><img src="./img/discord-icon.svg" height="24"> </span><span class="d-inline">Login Discord</span></a></span></div></nav><div class="container align-items-center" style="margin-top: 90px;"><div class="row"><div class="col-12 col-md-12 mx-auto"><div class="d-flex align-items-start text-start"><div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical"><button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Information</button> <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Factions</button><div class="mt-2"><b>Joined:</b></div><button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">PKD</button> <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button></div><div class="tab-content" id="v-pills-tabContent" style="width: 100%"><div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"><div class="card justify-content-center" style="margin: auto; width: 400px;"><div class="card-body"><h2 class="mb-0 text-center"><img src="./img/discord-icon.svg" height="38"> <span>Community Info</span></h2><span class="mt-0 d-block text-center">Kindly complete the form below to continue.</span> <label for="ign"><b>Nickname or In-game Name (For Games) *</b></label> <input type="text" id="ign" class="form-control" placeholder="LuisPK有一条龙" required> <label for="joinReason" class="mt-3"><b>Why do you want to join this community? *</b></label> <textarea id="joinReason" class="form-control bg-dark-subtle" style="resize: none; width: 100%; height: 200px;" placeholder="Being part of a community can provide a sense of belonging and support, as well as opportunities f..."></textarea> <button class="btn btn-primary mb-3 mt-3 float-end" id="copyButton" onclick="return false;"><i class="far fa-clipboard me-2"></i> <span id="copyButtonSpan">Save Details</span></button></div></div></div><div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"><div class="row">Loading...</div></div><div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">// TODO: As a manager: // TODO: Player's prefix and faction name // TODO: Pending Applications // TODO: Manage users, Promote to manager, Kick from the faction // TODO: As a user: // TODO: Apply as a user, leave the faction</div><div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div></div></div></div></div><script type="text/javascript">// using axios, get json from /json/factions.json
-    
-    axios.get('/json/factions.json')
-        .then(function (response) {
+		}</style></head><body class="bg-body-tertiary"><nav class="navbar navbar-expand-md bg-body fixed-top"><div class="container-fluid"><a class="navbar-brand text-danger" href="/"><img src="./img/mir4-brand.png" alt="MIR4" height="24" class="d-inline-block align-text-top"> Calc </a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" aria-current="page" href="/">Home</a></li><li class="nav-item"><a class="nav-link active" href="/stats.html">Management(Beta)</a></li><li class="nav-item"><a class="nav-link disabled">In-game Market (Coming soon)</a></li><li class="nav-item"><a class="nav-link disabled">Materials (Coming soon)</a></li></ul></div><div class="btn-group d-none" id="acctDetails"><button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><span><img id="acctAvatar" src="./img/discord-icon.svg" alt="Avatar" class="rounded-5" height="35"></span></button><ul class="dropdown-menu dropdown-menu-end"><span class="pt-2 d-block text-center">Logged in as: </span><span class="p-2 d-block text-center text-danger"><b id="acctNick">Nickname</b></span> <span class="pl-2 pb-2 pr-2 d-block text-center text-secondary"><small id="acctUsername">Username#1234</small></span><li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="/logout.html"><i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a></li></ul></div><span class="navbar-text d-none" id="loginDetails"><a href="/login.html" class="bg-dark-subtle border-2 btn btn-dark"><span class="d-inline"><img src="./img/discord-icon.svg" height="24"> </span><span class="d-inline">Login Discord</span></a></span></div></nav><div class="container align-items-center" style="margin-top: 90px;"><div class="row"><div class="col-12 col-md-12 mx-auto"><div class="d-flex align-items-start text-start"><div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical"><button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Information</button> <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Factions</button><div class="mt-2"><b>Joined:</b></div><button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">PKD</button> <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button></div><div class="tab-content" id="v-pills-tabContent" style="width: 100%"><div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"><div class="card justify-content-center" style="margin: auto; width: 400px;"><div class="card-body"><h2 class="mb-0 text-center"><img src="./img/discord-icon.svg" height="38"> <span>Community Info</span></h2><span class="mt-0 d-block text-center">Kindly complete the form below to continue.</span> <label for="ign"><b>Nickname or In-game Name (For Games) *</b></label> <input type="text" id="ign" class="form-control" placeholder="LuisPK有一条龙" required> <label for="joinReason" class="mt-3"><b>Why do you want to join this community? *</b></label> <textarea id="joinReason" class="form-control bg-dark-subtle" style="resize: none; width: 100%; height: 200px;" placeholder="Being part of a community can provide a sense of belonging and support, as well as opportunities f..."></textarea> <button class="btn btn-primary mb-3 mt-3 float-end" id="copyButton" onclick="return false;"><i class="far fa-clipboard me-2"></i> <span id="copyButtonSpan">Save Details</span></button></div></div></div><div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"><div class="row"><div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div></div></div><div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">// TODO: As a manager: // TODO: Player's prefix and faction name // TODO: Pending Applications // TODO: Manage users, Promote to manager, Kick from the faction // TODO: As a user: // TODO: Apply as a user, leave the faction</div><div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div></div></div></div></div><script type="text/javascript">let userDetails = localStorage.getItem("userDetails");
+    userDetails = JSON.parse(userDetails);
 
-            const template = `
-                <div class="col-6" >
-                    <div class="card justify-content-center mb-2">
-                        <div class="card-body">
-                            <h2 class="mb-0 text-center">
-                                <span> {{CLAN_NAME}}</span>
-                            </h2>
-
-                            <div>{{DESCRIPTION}}</div>
-
-                            <div class="float-end mt-3 members-count">
-                                {{MEMBERS-COUNT}} members
-                            </div>
-                            <!-- Click the button to copy the text inside the textarea. Put approriate bootstrap class with clipboard icon.-->
-                            <button class="btn btn-primary mb-3 mt-3 float-start applicationButton" data-id="{{ROLE_ID}}">
-                                <i class="far fa-clipboard me-2"></i> <span class="applicationText">Apply</span>
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-            `;
-
-
-            // loop through the response.data and append to #v-pills-profile
-            response.data.forEach(function(faction, i) {
-
-                //remove loading...
-                if (i === 0){
-                    document.querySelector("#v-pills-profile>div").innerHTML = "";
-
-                }
-                let newTemplate = template;
-
-                newTemplate = newTemplate.replace("{{CLAN_NAME}}", faction.name);
-                newTemplate = newTemplate.replace("{{ROLE_ID}}", faction.roleid);
-                
-                // Replace the description
-                if (faction.hasOwnProperty("description") && faction.description.length > 0){
-                    if (faction.description.length > 100) {
-                        newTemplate = newTemplate.replace("{{DESCRIPTION}}", faction.description.substring(0, 100) + "...");
-                    }else{
-                        newTemplate = newTemplate.replace("{{DESCRIPTION}}", faction.description);
-                    }
-
-                }else{
-                    newTemplate = newTemplate.replace("{{DESCRIPTION}}", "No description");
-                }
-
-
-                // Replace the members count
-                if (faction.hasOwnProperty("members") && faction.members.length > 0){
-                    newTemplate = newTemplate.replace("{{MEMBERS-COUNT}}", faction.members.length);
-                }else{
-                    newTemplate = newTemplate.replace("{{MEMBERS-COUNT}}", "0");
-                }
-                
-            
-
-                console.log(faction);
-                document.querySelector("#v-pills-profile>div").innerHTML += newTemplate;
+    (async () => {
+        const endPoint = '//mir4-serverless.appspot.com/api/v1/applications';
+        
+        try {
+            const applications = await axios.get(endPoint, {
+                headers: { 'x-access-token': userDetails.token}
             });
 
+            
+            const factions = await axios.get('/json/factions.json');
 
-            // handle success
-            console.log(response.data);
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .then(function () {
-            // always executed
-        });
+            const template = `
+                    <div class="col-6" >
+                        <div class="card justify-content-center mb-2">
+                            <div class="card-body">
+                                <h2 class="mb-0 text-center">
+                                    <span> {{CLAN_NAME}}</span>
+                                </h2>
+
+                                <div>{{DESCRIPTION}}</div>
+
+                                <div class="float-end mt-3 members-count">
+                                    {{MEMBERS-COUNT}} members
+                                </div>
+                                <!-- Click the button to copy the text inside the textarea. Put approriate bootstrap class with clipboard icon.-->
+                                <button class="btn btn-primary mb-3 mt-3 float-start applicationButton" data-id="{{ROLE_ID}}">
+                                    <i class="far fa-clipboard me-2"></i> <span class="applicationText">Apply</span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+
+                // loop through the response.data and append to #v-pills-profile
+                factions.data.forEach(function(faction, i) {
+
+                    // document.queryselector from template variable
+                    document.querySelector
+
+                    console.log();
+
+                    //remove loading...
+                    if (i === 0){
+                        document.querySelector("#v-pills-profile>div").innerHTML = "";
+
+                    }
+                    let newTemplate = template;
+
+                    newTemplate = newTemplate.replace("{{CLAN_NAME}}", faction.name);
+                    newTemplate = newTemplate.replace("{{ROLE_ID}}", faction.roleid);
+                    
+                    // Replace the description
+                    if (faction.hasOwnProperty("description") && faction.description.length > 0){
+                        if (faction.description.length > 100) {
+                            newTemplate = newTemplate.replace("{{DESCRIPTION}}", faction.description.substring(0, 100) + "...");
+                        }else{
+                            newTemplate = newTemplate.replace("{{DESCRIPTION}}", faction.description);
+                        }
+
+                    }else{
+                        newTemplate = newTemplate.replace("{{DESCRIPTION}}", "No description");
+                    }
+
+
+                    // Replace the members count
+                    if (faction.hasOwnProperty("members") && faction.members.length > 0){
+                        newTemplate = newTemplate.replace("{{MEMBERS-COUNT}}", faction.members.length);
+                    }else{
+                        newTemplate = newTemplate.replace("{{MEMBERS-COUNT}}", "0");
+                    }
+                    
+                
+
+                    console.log(faction);
+                    document.querySelector("#v-pills-profile>div").innerHTML += newTemplate;
+
+
+                    // if faction.roleid is in applications.data.applications, then change the button text to "Cancel Application"
+                    if (applications.data.applications.includes(faction.roleid)){
+                        document.querySelector(`[data-id="${faction.roleid}"]`).classList = "btn btn-warning mb-3 mt-3 float-start cancelApplicationButton";
+                        document.querySelector(`[data-id="${faction.roleid}"]`).querySelector(".applicationText").innerHTML = "Cancel Application";
+
+                        // change the icon to fa-times
+                        document.querySelector(`[data-id="${faction.roleid}"]`).querySelector("i").classList = "fa fa-times me-2";
+                    }
+
+                });
+            
+        } catch (error) {
+            window.showToast("Something went wrong. Please refresh the page!");
+            return;
+        }
+
+    })();
 
 
 
@@ -98,19 +118,12 @@
         const parent = target.parentElement;
 
         // if event.target is not a button, then it's a child of a button
-        if (target.tagName !== "BUTTON"){
-
-            if (parent && parent.tagName === 'BUTTON') {
-                target = parent;
-            }
-
+        if (target.tagName !== "BUTTON" && parent && parent.tagName === 'BUTTON'){
+            target = parent;
         }
 
 
         if (target.matches(".applicationButton")) {
-
-            let userDetails = localStorage.getItem("userDetails");
-            userDetails = JSON.parse(userDetails);
             
             const endPoint = '//mir4-serverless.appspot.com/api/v1/apply';
             const dataId = target.getAttribute("data-id");
@@ -163,9 +176,6 @@
                 // always executed
             });
 
-
-
-        
         }
 
         // check if the clicked element has class cancelApplicationButton

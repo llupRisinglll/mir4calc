@@ -141,6 +141,27 @@ const auth = require("./middleware/auth");
 // import FactionApplications
 const FactionApplications = require('./schema/FactionApplications');
 
+
+app.get("/api/v1/applications", auth, async (req, res) => {
+    const userDetail = req.user;
+
+
+    // get applications and return array of applications roleIds
+    const applications = await FactionApplications.find({
+        discordId: userDetail.user.id
+    }).select('roleId -_id');
+
+    // reformat the applications array to be an array of roleId
+    const applicationsArray = applications.map(application => {
+        return application.roleId;
+    });
+
+    res.json({
+        isSuccess: 1,
+        applications: applicationsArray
+    });
+});
+
 app.post("/api/v1/apply", auth, async (req, res) => {
     const userDetail = req.user;
     const { faction } = req.body;
