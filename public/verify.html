@@ -1,4 +1,4 @@
-<!doctype html><html lang="en" data-bs-theme="dark"><head><meta charset="utf-8"><title>MIR4 Calc -</title><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"><style type="text/css">/* Disable highlighting and selection of text */
+<!doctype html><html lang="en" data-bs-theme="dark"><head><meta charset="utf-8"><title>MIR4 Calc -</title><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"><script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script><style type="text/css">/* Disable highlighting and selection of text */
 		* {
 			-webkit-touch-callout: none;
 			-webkit-user-select: none;
@@ -6,4 +6,40 @@
 			-moz-user-select: none;
 			-ms-user-select: none;
 			user-select: none;
-		}</style></head><body class="bg-body-tertiary"><nav class="navbar navbar-expand-md bg-body fixed-top"><div class="container-fluid"><a class="navbar-brand text-danger" href="/"><img src="./img/mir4-brand.png" alt="MIR4" height="24" class="d-inline-block align-text-top"> Calc </a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav"><li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li><li class="nav-item"><a class="nav-link disabled">Ally Stats (Upcoming!)</a></li><li class="nav-item"><a class="nav-link disabled">In-game Market (Coming soon)</a></li><li class="nav-item"><a class="nav-link disabled">Materials (Coming soon)</a></li></ul></div><span class="navbar-text d-none"><a href="https://discord.com/oauth2/authorize?client_id=1088061930897412107&redirect_uri=https%3A%2F%2Fmir4-26fc8.web.app%2Fauth.html&response_type=token&scope=identify%20guilds" class="bg-dark-subtle border-2 btn btn-dark"><span class="d-inline"><img src="./img/discord-icon.svg" height="24"> </span><span class="d-inline">Login Discord</span></a></span></div></nav><div class="container align-items-center" style="margin-top: 90px;">asdasdsad</div></body></html>
+		}</style></head><body class="bg-body-tertiary"><nav class="navbar navbar-expand-md bg-body fixed-top"><div class="container-fluid"><a class="navbar-brand text-danger" href="/"><img src="./img/mir4-brand.png" alt="MIR4" height="24" class="d-inline-block align-text-top"> Calc </a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav"><li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li><li class="nav-item"><a class="nav-link disabled">Ally Stats (Upcoming!)</a></li><li class="nav-item"><a class="nav-link disabled">In-game Market (Coming soon)</a></li><li class="nav-item"><a class="nav-link disabled">Materials (Coming soon)</a></li></ul></div><div class="btn-group" id="acctDetails"><button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><span><img id="acctAvatar" src="./img/discord-icon.svg" alt="Avatar" class="rounded-5" height="35"></span></button><ul class="dropdown-menu dropdown-menu-end"><span class="pt-2 d-block text-center">Logged in as: </span><span class="p-2 d-block text-center text-danger"><b id="acctNick">Nickname</b></span> <span class="pl-2 pb-2 pr-2 d-block text-center text-secondary"><small id="acctUsername">Username#1234</small></span><li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="/logout.html"><i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a></li></ul></div><span class="navbar-text d-none" id="loginDetails"><a href="https://discord.com/oauth2/authorize?client_id=1088061930897412107&redirect_uri=https%3A%2F%2Fmir4-26fc8.web.app%2Fauth.html&response_type=token&scope=identify%20guilds" class="bg-dark-subtle border-2 btn btn-dark"><span class="d-inline"><img src="./img/discord-icon.svg" height="24"> </span><span class="d-inline">Login Discord</span></a></span></div></nav><div class="container align-items-center" style="margin-top: 90px;">asdasdsad</div><script type="text/javascript">// after page load, check if user is logged based on localstorage
+
+		// if logged in, show logout button
+		// if not logged in, show login button
+
+		window.onload = () => {
+
+			// check if user is logged in
+			if (localStorage.getItem('userDetails')) {
+				// if logged in, show logout button
+				// console.log('logged in');
+				// console.log(localStorage.getItem('discordToken'));
+				// console.log(localStorage.getItem('discordUsername'));
+				// console.log(localStorage.getItem('discordDiscriminator'));
+				// console.log(localStorage.getItem('discordAvatar'));
+				
+				let userDetails = localStorage.getItem('userDetails');
+				userDetails = JSON.parse(userDetails);
+
+				// set username
+				document.getElementById('acctUsername').innerHTML = userDetails.user.username + '#' + userDetails.user.discriminator;
+				document.getElementById('acctNick').innerHTML = userDetails.nick;
+
+
+				// change the avatar
+				document.getElementById("acctAvatar").src = "https://cdn.discordapp.com/avatars/" + userDetails.user.id + "/" + userDetails.user.avatar + ".png?size=128";
+
+				// hide #loginDetails that will ask the user to login
+				document.querySelector('#loginDetails').classList.add('d-none');
+				document.querySelector('#acctDetails').classList.remove('d-none');
+
+
+			} else {
+				document.querySelector('#loginDetails').classList.remove('d-none');
+				document.querySelector('#acctDetails').classList.add('d-none');
+			}
+		};</script></body></html>

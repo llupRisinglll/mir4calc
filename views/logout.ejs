@@ -1,0 +1,10 @@
+<div>Logging out... Please wait</div>
+
+<script type="text/javascript">
+
+    if (localStorage.getItem('userDetails')) {
+        localStorage.removeItem('userDetails');
+    }
+
+    window.location.href = '/';
+</script>

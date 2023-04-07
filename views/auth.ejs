@@ -1,1 +1,38 @@
-Verifying credentials, please wait...
+<div>
+    Verifying credentials, please wait...
+</div>
+
+<script type="text/javascript">
+    const endPoint = '//mir4-serverless.appspot.com/api/v1/auth';
+
+    const fragment = new URLSearchParams(window.location.hash.slice(1));
+    const [accessToken, tokenType] = [fragment.get('access_token'), fragment.get('token_type')];
+
+    // post the token to the server using axios
+    axios.post(endPoint, {
+        token: accessToken,
+        type: tokenType
+    })
+    .then((response) => {
+        console.log(response);
+        // if the response is successful, store the token in local storage
+        if (response.status === 200) {
+            // if response.data.token exists save all data tot he userdetails
+
+            if (response.data.hasOwnProperty('token') && response.data.hasOwnProperty("user")){
+                localStorage    .setItem('userDetails', JSON.stringify(response.data));
+            }
+
+            window.location.href = '/';
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+        
+
+    // Replace the URL in the address bar with the home page
+    window.history.replaceState({}, document.title, "/");
+
+
+</script>

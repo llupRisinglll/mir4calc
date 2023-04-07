@@ -7,7 +7,8 @@
 		"start": "node ./serverless/app.js",
 		"dev": "nodemon --watch views index.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"deploy-app-engine": "./google-cloud-sdk/bin/gcloud app deploy --project=mir4-serverless --version=20230325t032247  --quiet"
+		"deploy-app-engine": "./google-cloud-sdk/bin/gcloud app deploy --project=mir4-serverless --version=20230325t032247  --quiet",
+		"deploy-firebase": "firebase deploy --only hosting"
 	},
 	"author": "",
 	"license": "ISC",

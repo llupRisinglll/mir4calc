@@ -12,59 +12,6 @@ require('dotenv').config();
 // set cronjob to use asia/singapore timezone
 process.env.TZ = 'Asia/Singapore';
 
-
-// myIntent.add(IntentsBitField.Flags.GuildPresences);
-// myIntent.add(IntentsBitField.Flags.GuildMessages);
-// myIntent.add(IntentsBitField.Flags.GuildMessageReactions);
-// myIntent.add(IntentsBitField.Flags.GuildMessageTyping);
-// myIntent.add(IntentsBitField.Flags.GuildVoiceStates);
-// myIntent.add(IntentsBitField.Flags.GuildInvites);
-// myIntent.add(IntentsBitField.Flags.GuildWebhooks);
-// myIntent.add(IntentsBitField.Flags.GuildIntegrations);
-// myIntent.add(IntentsBitField.Flags.GuildEmojisAndStickers);
-// myIntent.add(IntentsBitField.Flags.GuildMembers);
-// myIntent.add(IntentsBitField.Flags.Guilds);
-
-
-// self involked function
-(async () => {
-    const tokenType = "Bearer";
-    const accessToken = "1mkE6P9yhhk0ncFYt46sxXhGNw3eJ3";
-
-
-})();
-
-
-
-
-// DiscordClient.on('ready', async () => {
-
-//     console.log(`Logged in as ${DiscordClient.user.tag}`);
-
-//     // Get an array of all the guilds the user is a member of
-//     const guilds = DiscordClient.guilds.cache.array();
-
-//     console.log(guilds);
-// });
-
-
-
-
-// verify the token via the discord api
-//  fetch('https://discord.com/api/users/@me/guilds', {
-//     headers: {
-//         authorization: `${tokenType} ${accessToken}`,
-//     },
-// })
-// .then(result => result.json())
-// .then(response => {
-//     console.log(response);
-//     //handle response
-// })
-// .catch(console.error);
-
-// Log our bot in using the token from https://discord.com/developers/applications
-
 const app = express();
 
 
