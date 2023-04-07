@@ -24,7 +24,7 @@
                             {{MEMBERS-COUNT}} members
                         </div>
                         <!-- Click the button to copy the text inside the textarea. Put approriate bootstrap class with clipboard icon.-->
-                        <button class="btn btn-primary mb-3 mt-3 float-start applicationButton">
+                        <button class="btn btn-primary mb-3 mt-3 float-start applicationButton" data-id="{{ROLE_ID}}">
                             <i class="far fa-clipboard me-2"></i> <span class="applicationText">Apply</span>
                         </button>
 
@@ -44,6 +44,7 @@
                 let newTemplate = template;
 
                 newTemplate = newTemplate.replace("{{CLAN_NAME}}", faction.name);
+                newTemplate = newTemplate.replace("{{ROLE_ID}}", faction.roleid);
                 
                 // Replace the description
                 if (faction.hasOwnProperty("description") && faction.description.length > 0){
@@ -106,10 +107,27 @@
 
         if (target.matches(".applicationButton")) {
 
+            let userDetails = localStorage.getItem("userDetails");
+            userDetails = JSON.parse(userDetails);
+            
+            const endPoint = '//mir4-serverless.appspot.com/api/v1/apply';
+            const dataId = target.getAttribute("data-id");
+
+            
             // look for .applicationText inside this element
             target.querySelector(".applicationText").innerHTML = "Applying...";
             target.querySelector("i").classList = "fa fa-spinner fa-spin me-2";
 
+            // send post request to /api/v1/apply with header x-access-token
+            axios.post(endPoint, {
+                faction: dataId
+            }, {
+                headers: {
+                    'x-access-token': userDetails.token
+                }
+            })
+            .then(function (response) {
+                
             setTimeout(() => {
                 // random between true and false
                 let random = Math.random() >= 0.5;
@@ -127,6 +145,17 @@
                 target.querySelector("i").classList = "fa fa-times me-2";
                 target.classList = "btn btn-danger mb-3 mt-3 float-start leaveFactionButton";
             }, 1000);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .then(function () {
+                // always executed
+            });
+
+
+
         
         }
 
@@ -167,9 +196,7 @@
     // TODO: If the user is logged in change the nickname placeholder to the user's nickname
 
     // TODO: If the user does not have details on Information, Disable other things
-    // TODO: If the user already has details on Information, Make the "Faction" as active tab
-
-    // TODO: Dynamic faction tab</script></div><script type="text/javascript">// after page load, check if user is logged based on localstorage
+    // TODO: If the user already has details on Information, Make the "Faction" as active tab</script></div><script type="text/javascript">// after page load, check if user is logged based on localstorage
 
 		// if logged in, show logout button
 		// if not logged in, show login button

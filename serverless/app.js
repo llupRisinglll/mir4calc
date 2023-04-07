@@ -21,7 +21,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // import jwt
 const jwt = require("jsonwebtoken");
-
 const PKDServer = '912962966062764062';
 
 // load the .env file
@@ -125,7 +124,7 @@ app.post("/api/v1/auth", async (req, res) => {
     const jwToken = jwt.sign(
         { nick: userData.nick, user: userData.user },
         process.env.JWT_SECRET,
-        { expiresIn: '2h'}
+        // { expiresIn: '2h'}
     );
 
 
@@ -137,25 +136,32 @@ app.post("/api/v1/auth", async (req, res) => {
 
 });
 
-app.post("/api/v1/apply", async (req, res) => {
+const auth = require("./middleware/auth");
 
-    const { roleId, token } = req.body;
+// import FactionApplications
+const FactionApplications = require('./schema/FactionApplications');
 
-    // import FactionApplications
-    const FactionApplications = require('./schema/FactionApplications');
+app.post("/api/v1/apply", auth, async (req, res) => {
+    const userDetail = req.user;
+    const { faction } = req.body;
+
+    // TODO: Verify if faction is a valid faction
+    
+    // TODO: Verify if user is already in a faction
 
     const factionApplications = new FactionApplications({
-        discordId: '1234567890',
-        discordUsername: 'HannahChan',
-        discordDiscriminator: '1234',
-        roleId: 1234567890,
+        discordId: userDetail.user.id,
+        discordUsername: userDetail.user.username,
+        discordDiscriminator: userDetail.user.discriminator,
+        roleId: faction
     });
 
-    factionApplications.save().then(() => {
-        console.log('Application Saved');
-    }).catch((error) => {
-        console.error('Error saving user:', error);
-    });
+    try {
+        await factionApplications.save();
+        res.send('Application Saved');
+    } catch (error) {
+        res.send('Error saving user:');
+    }
 
 });
 

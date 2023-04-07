@@ -14,13 +14,13 @@ const ApplicationSchema = new mongoose.Schema({
     },
     // Discord discriminator of the user who submitted the application
     discordDiscriminator: {
-        type: String,
+        type: Number,
         required: true,
     },
     
     // Discord ID of the role that the user has applied for
     roleId: {
-        type: String,
+        type: Number,
         required: true,
     },
 
