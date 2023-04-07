@@ -10,7 +10,29 @@
         localStorage.removeItem('userDetails');
     }
 
-    window.location.href = '/';</script></div><script type="text/javascript">// after page load, check if user is logged based on localstorage
+    window.location.href = '/';</script></div><div class="toast-overlay d-none" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9998;"></div><div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" id="mainToast" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;"><div class="d-flex"><div class="toast-body">An error occurs</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div><script type="text/javascript">window.showToast = (message) => {
+			// Get the toast element
+			const toastEl = document.querySelector('#mainToast');
+
+			// Create a new Toast instance from the toast element
+			const toast = new bootstrap.Toast(toastEl);
+
+			toastEl.querySelector(".toast-body").innerHTML = message;
+
+			toastEl.addEventListener('hide.bs.toast', function () {
+				document.querySelector(".toast-overlay").classList.add("d-none");
+			})
+
+			toastEl.addEventListener('show.bs.toast', function () {
+				document.querySelector(".toast-overlay").classList.remove("d-none");	
+			})
+
+			
+			// Show the toast
+			toast.show();
+		}
+
+		// after page load, check if user is logged based on localstorage
 
 		// if logged in, show logout button
 		// if not logged in, show login button

@@ -145,9 +145,19 @@ app.post("/api/v1/apply", auth, async (req, res) => {
     const userDetail = req.user;
     const { faction } = req.body;
 
-    // TODO: Verify if faction is a valid faction
-    
-    // TODO: Verify if user is already in a faction
+    // Check if discordId with roleId already exists
+    const existingApplication = await FactionApplications.findOne({
+        discordId: userDetail.user.id,
+        roleId: faction
+    });
+
+    if (existingApplication) {
+        res.json({
+            isSuccess: 0,
+            message: 'You have already applied for this faction'
+        });
+        return;
+    }
 
     const factionApplications = new FactionApplications({
         discordId: userDetail.user.id,
@@ -158,9 +168,15 @@ app.post("/api/v1/apply", auth, async (req, res) => {
 
     try {
         await factionApplications.save();
-        res.send('Application Saved');
+        res.send({
+            isSuccess: 1,
+            message: 'Application submitted successfully'
+        });
     } catch (error) {
-        res.send('Error saving user:');
+        res.send({
+            isSuccess: 0,
+            message: error.message
+        });
     }
 
 });

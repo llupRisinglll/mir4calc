@@ -127,8 +127,15 @@
                 }
             })
             .then(function (response) {
-                
-            setTimeout(() => {
+                if (Boolean(response.data.isSuccess) === false){
+                    window.showToast(response.data.message);
+
+                    // Bring back the original text
+                    target.querySelector(".applicationText").innerHTML = "Apply";
+                    target.querySelector("i").classList = "far fa-clipboard me-2";
+                    return;
+                }
+
                 // random between true and false
                 let random = Math.random() >= 0.5;
 
@@ -144,11 +151,11 @@
                 // change to leaving icon
                 target.querySelector("i").classList = "fa fa-times me-2";
                 target.classList = "btn btn-danger mb-3 mt-3 float-start leaveFactionButton";
-            }, 1000);
             })
             .catch(function (error) {
-                // handle error
-                console.log(error);
+                // Bring back the original text
+                target.querySelector(".applicationText").innerHTML = "Apply";
+                target.querySelector("i").classList = "far fa-clipboard me-2";
             })
             .then(function () {
                 // always executed
@@ -196,7 +203,29 @@
     // TODO: If the user is logged in change the nickname placeholder to the user's nickname
 
     // TODO: If the user does not have details on Information, Disable other things
-    // TODO: If the user already has details on Information, Make the "Faction" as active tab</script></div><script type="text/javascript">// after page load, check if user is logged based on localstorage
+    // TODO: If the user already has details on Information, Make the "Faction" as active tab</script></div><div class="toast-overlay d-none" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9998;"></div><div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" id="mainToast" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;"><div class="d-flex"><div class="toast-body">An error occurs</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div><script type="text/javascript">window.showToast = (message) => {
+			// Get the toast element
+			const toastEl = document.querySelector('#mainToast');
+
+			// Create a new Toast instance from the toast element
+			const toast = new bootstrap.Toast(toastEl);
+
+			toastEl.querySelector(".toast-body").innerHTML = message;
+
+			toastEl.addEventListener('hide.bs.toast', function () {
+				document.querySelector(".toast-overlay").classList.add("d-none");
+			})
+
+			toastEl.addEventListener('show.bs.toast', function () {
+				document.querySelector(".toast-overlay").classList.remove("d-none");	
+			})
+
+			
+			// Show the toast
+			toast.show();
+		}
+
+		// after page load, check if user is logged based on localstorage
 
 		// if logged in, show logout button
 		// if not logged in, show login button

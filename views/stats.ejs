@@ -198,8 +198,15 @@
                 }
             })
             .then(function (response) {
-                
-            setTimeout(() => {
+                if (Boolean(response.data.isSuccess) === false){
+                    window.showToast(response.data.message);
+
+                    // Bring back the original text
+                    target.querySelector(".applicationText").innerHTML = "Apply";
+                    target.querySelector("i").classList = "far fa-clipboard me-2";
+                    return;
+                }
+
                 // random between true and false
                 let random = Math.random() >= 0.5;
 
@@ -215,11 +222,11 @@
                 // change to leaving icon
                 target.querySelector("i").classList = "fa fa-times me-2";
                 target.classList = "btn btn-danger mb-3 mt-3 float-start leaveFactionButton";
-            }, 1000);
             })
             .catch(function (error) {
-                // handle error
-                console.log(error);
+                // Bring back the original text
+                target.querySelector(".applicationText").innerHTML = "Apply";
+                target.querySelector("i").classList = "far fa-clipboard me-2";
             })
             .then(function () {
                 // always executed
