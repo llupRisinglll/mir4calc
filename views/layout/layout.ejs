@@ -44,7 +44,7 @@
 						<a class="nav-link active" aria-current="page" href="/">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link disabled">Ally Stats (Upcoming!)</a>
+						<a class="nav-link" href="/stats.html">Management</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link disabled">In-game Market (Coming soon)</a>
@@ -101,11 +101,6 @@
 			// check if user is logged in
 			if (localStorage.getItem('userDetails')) {
 				// if logged in, show logout button
-				// console.log('logged in');
-				// console.log(localStorage.getItem('discordToken'));
-				// console.log(localStorage.getItem('discordUsername'));
-				// console.log(localStorage.getItem('discordDiscriminator'));
-				// console.log(localStorage.getItem('discordAvatar'));
 				
 				let userDetails = localStorage.getItem('userDetails');
 				userDetails = JSON.parse(userDetails);
