@@ -1,6 +1,24 @@
 const express = require("express");
 const cors = require("cors");
 
+// import dotenv
+require('dotenv').config();
+
+// Connect to mongodb using mongoose
+const mongoose = require("mongoose");
+
+
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}).then(() => {
+    console.log('Connected to MongoDB!');
+}).catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+});
+
+
+
 // import jwt
 const jwt = require("jsonwebtoken");
 
@@ -24,7 +42,9 @@ app.use(cors({
 })); // preflight OPTIONS; put before other routes
 
 
-app.use(express.urlencoded());
+app.use(express.urlencoded({
+    extended: true
+}));
 app.use(express.json());
 
 // port
@@ -114,6 +134,28 @@ app.post("/api/v1/auth", async (req, res) => {
 
     res.status(200).json(userData)
 
+
+});
+
+app.post("/api/v1/apply", async (req, res) => {
+    
+    const { roleId, token } = req.body;
+
+    // import FactionApplications
+    const FactionApplications = require('./FactionApplications');
+
+    const factionApplications = new FactionApplications({
+        discordId: '1234567890',
+        discordUsername: 'HannahChan',
+        discordDiscriminator: '1234',
+        roleId: 1234567890,
+    });
+
+    factionApplications.save().then(() => {
+        console.log('Application Saved');
+    }).catch((error) => {
+        console.error('Error saving user:', error);
+    });
 
 });
 
