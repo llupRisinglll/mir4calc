@@ -27,7 +27,7 @@ const DiscordClient = new Client({
 
 
 DiscordClient.on('ready', async () => {
-    
+    const PKDServer = '912962966062764062';
     const channelId = '957557291207499837'; // Replace with known channel ID
     const channel = DiscordClient.channels.cache.get(channelId);
 
@@ -36,6 +36,14 @@ DiscordClient.on('ready', async () => {
         console.error('The channel does not exist!');
         return;
     }
+
+
+    const guild = DiscordClient.guilds.cache.get(PKDServer);
+    const roles = guild.roles.cache;
+    
+    roles.forEach(role => {
+      console.log(role.id, role.name);
+    });
 
 
     // Import the DISCORD schedules JSON
@@ -92,22 +100,6 @@ DiscordClient.on('ready', async () => {
             }
         }
     }, 1000 * 60 * 1); // should be 1 minutes
-
-    // start an express server
-    const express = require('express');
-    const app = express();
-
-
-    app.get('*', (req, res) => {
-        res.send('Hello World!');
-    });
-
-    // start the server
-    app.listen(8080, () => {
-        console.log('Server started on port 3000');
-    });
-
-    
 });
 
 // Log our bot in using the token from https://discord.com/developers/applications
