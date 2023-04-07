@@ -39,7 +39,8 @@ function getData(file) {
 	const jsonPath = path.join(viewsDir, `${file.replace('.ejs', '')}.json`);
 	
 	let data = {
-		pageTitle: "" // Default page title
+		pageTitle: "", // Default page title
+		route: "" // Default route
 	};
 	if (fs.existsSync(jsonPath)) {
 		data = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));

@@ -1,3 +1,4 @@
 {
-	"pageTitle": "Alliance Stats"
+	"pageTitle": "Factions",
+	"route": "/stats"
 }
