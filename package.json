@@ -4,18 +4,21 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "node jobs/discord-reminder.js",
+		"start": "node ./serverless/app.js",
 		"dev": "nodemon --watch views index.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"deploy-app-engine": "./google-cloud-sdk/bin/gcloud app deploy --project=mir4-serverless --version=20230325t032247  --quiet"
 	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"cors": "^2.8.5",
 		"discord.js": "^14.8.0",
 		"dotenv": "^16.0.3",
 		"ejs": "^3.1.8",
 		"express": "^4.18.2",
 		"html-minifier": "^4.0.0",
+		"jsonwebtoken": "^9.0.0",
 		"uglify-js": "^3.17.4"
 	},
 	"devDependencies": {
