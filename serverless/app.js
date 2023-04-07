@@ -202,8 +202,34 @@ app.post("/api/v1/apply", auth, async (req, res) => {
             message: error.message
         });
     }
-
 });
+
+app.post("/api/v1/cancel", auth, async (req, res) => {
+    const userDetail = req.user;
+    const { faction } = req.body;
+
+    // Delete application
+    const deletedApplication = await FactionApplications.deleteOne({
+        serverId: PKDServer,
+        discordId: userDetail.user.id,
+        roleId: faction
+    });
+
+    if (deletedApplication.deletedCount === 0) {
+        res.json({
+            isSuccess: 0,
+            message: 'You have not applied for this faction. Try refreshing the page'
+        });
+        return;
+    }
+
+    res.send({
+        isSuccess: 1,
+        message: 'Application cancelled successfully'
+    });
+    
+});
+
 
 
 app.get("*", (req, res) => {

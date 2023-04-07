@@ -187,7 +187,7 @@
     // dynamic query selector inside #v-pills-profile
 
     // change the event listener to target #v-pills-profile instead of .applicationButton
-    document.querySelector("#v-pills-profile").addEventListener("click", function(event) {
+    document.querySelector("#v-pills-profile").addEventListener("click", async function(event) {
         // check if the clicked element has class applicationButton
 
         let target = event.target;
@@ -199,9 +199,12 @@
         }
 
 
+        const applyEndPoint = '//mir4-serverless.appspot.com/api/v1/apply';
+        const cancelEndPoint = '//mir4-serverless.appspot.com/api/v1/cancel';
+
+
+
         if (target.matches(".applicationButton")) {
-            
-            const endPoint = '//mir4-serverless.appspot.com/api/v1/apply';
             const dataId = target.getAttribute("data-id");
 
             
@@ -209,15 +212,14 @@
             target.querySelector(".applicationText").innerHTML = "Applying...";
             target.querySelector("i").classList = "fa fa-spinner fa-spin me-2";
 
-            // send post request to /api/v1/apply with header x-access-token
-            axios.post(endPoint, {
-                faction: dataId
-            }, {
-                headers: {
-                    'x-access-token': userDetails.token
-                }
-            })
-            .then(function (response) {
+
+            try {
+                const response = await axios.post(applyEndPoint, { faction: dataId }, {
+                    headers: {
+                        'x-access-token': userDetails.token
+                    }
+                });
+
                 if (Boolean(response.data.isSuccess) === false){
                     window.showToast(response.data.message);
 
@@ -226,32 +228,31 @@
                     target.querySelector("i").classList = "far fa-clipboard me-2";
                     return;
                 }
+                
+                target.querySelector(".applicationText").innerHTML = "Cancel Application";
+                target.querySelector("i").classList = "fa fa-times me-2";
+                target.classList = "btn btn-warning mb-3 mt-3 float-start cancelApplicationButton";
+                return;
 
-                // random between true and false
-                let random = Math.random() >= 0.5;
 
-                if (random) {
-                    target.querySelector(".applicationText").innerHTML = "Cancel Application";
+                const LEAVE_FACTION_TEMPLATE = false; // TODO: Remove from here and just use in the renderings
+
+                if (LEAVE_FACTION_TEMPLATE) {
+                    target.querySelector(".applicationText").innerHTML = "Leave Faction";
+
+                    // change to leaving icon
                     target.querySelector("i").classList = "fa fa-times me-2";
-                    target.classList = "btn btn-warning mb-3 mt-3 float-start cancelApplicationButton";
-                    return;
+                    target.classList = "btn btn-danger mb-3 mt-3 float-start leaveFactionButton";
+                    return
                 }
 
-                target.querySelector(".applicationText").innerHTML = "Leave Faction";
-
-                // change to leaving icon
-                target.querySelector("i").classList = "fa fa-times me-2";
-                target.classList = "btn btn-danger mb-3 mt-3 float-start leaveFactionButton";
-            })
-            .catch(function (error) {
+            } catch (error) {
                 // Bring back the original text
                 target.querySelector(".applicationText").innerHTML = "Apply";
                 target.querySelector("i").classList = "far fa-clipboard me-2";
-            })
-            .then(function () {
-                // always executed
-            });
-
+                
+                window.showToast("Something went wrong. Please refresh the page!");
+            }
         }
 
         // check if the clicked element has class cancelApplicationButton
@@ -261,11 +262,42 @@
             target.querySelector(".applicationText").innerHTML = "Cancelling...";
             target.querySelector("i").classList = "fa fa-spinner fa-spin me-2";
 
-            setTimeout(() => {
+            const dataId = target.getAttribute("data-id");
+
+            
+            // look for .applicationText inside this element
+            target.querySelector(".applicationText").innerHTML = "Applying...";
+            target.querySelector("i").classList = "fa fa-spinner fa-spin me-2";
+
+
+            try {
+                const response = await axios.post(cancelEndPoint, { faction: dataId }, {
+                    headers: {
+                        'x-access-token': userDetails.token
+                    }
+                });
+
+                if (Boolean(response.data.isSuccess) === false){
+                    window.showToast(response.data.message);
+
+                    // Bring back the original text
+                    target.querySelector(".applicationText").innerHTML = "Cancel Application";
+                    target.querySelector("i").classList = "fa fa-times me-2";
+                    return;
+                }
+
                 target.querySelector(".applicationText").innerHTML = "Apply";
                 target.querySelector("i").classList = "far fa-clipboard me-2";
                 target.classList = "btn btn-primary mb-3 mt-3 float-start applicationButton";
-            }, 1000);
+            }
+            catch (error){
+                // Bring back the original text
+                target.querySelector(".applicationText").innerHTML = "Cancel Application";
+                target.querySelector("i").classList = "fa fa-times me-2";
+                
+                window.showToast("Something went wrong. Please refresh the page!");
+            }
+
         }
 
         // check if the clicked element has class leaveFactionButton
