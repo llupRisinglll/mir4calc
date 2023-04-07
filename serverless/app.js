@@ -7,7 +7,6 @@ require('dotenv').config();
 // Connect to mongodb using mongoose
 const mongoose = require("mongoose");
 
-
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -17,14 +16,10 @@ mongoose.connect(process.env.MONGODB_URI, {
     console.error('Error connecting to MongoDB:', error);
 });
 
-
-
 // import jwt
 const jwt = require("jsonwebtoken");
 const PKDServer = '912962966062764062';
 
-// load the .env file
-require('dotenv').config();
 
 // set cronjob to use asia/singapore timezone
 process.env.TZ = 'Asia/Singapore';
@@ -141,8 +136,14 @@ const auth = require("./middleware/auth");
 // import FactionApplications
 const FactionApplications = require('./schema/FactionApplications');
 
+// group by routes and add prefix /api/v1
 
-app.get("/api/v1/applications", auth, async (req, res) => {
+const router = express.Router();
+
+app.use("/api/v1", auth, router);
+
+
+router.get("/applications", async (req, res) => {
     const userDetail = req.user;
 
 
@@ -163,7 +164,7 @@ app.get("/api/v1/applications", auth, async (req, res) => {
     });
 });
 
-app.post("/api/v1/apply", auth, async (req, res) => {
+router.post("/apply", async (req, res) => {
     const userDetail = req.user;
     const { faction } = req.body;
 
@@ -204,7 +205,7 @@ app.post("/api/v1/apply", auth, async (req, res) => {
     }
 });
 
-app.post("/api/v1/cancel", auth, async (req, res) => {
+router.post("/cancel", async (req, res) => {
     const userDetail = req.user;
     const { faction } = req.body;
 
