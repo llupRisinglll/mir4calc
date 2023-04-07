@@ -154,7 +154,7 @@ app.post("/api/v1/apply", auth, async (req, res) => {
     if (existingApplication) {
         res.json({
             isSuccess: 0,
-            message: 'You have already applied for this faction'
+            message: 'You have already applied for this faction. Try refreshing the page'
         });
         return;
     }

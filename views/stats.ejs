@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-12 col-md-6 mx-auto">
+    <div class="col-12 col-md-12 mx-auto">
         <div class="d-flex align-items-start text-start">
             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
@@ -22,7 +22,7 @@
             <div class="tab-content" id="v-pills-tabContent" style="width: 100%">
                 <div class="tab-pane fade" id="v-pills-home" role="tabpanel"
                     aria-labelledby="v-pills-home-tab">
-                    <div class="card justify-content-center">
+                    <div class="card justify-content-center" style="margin: auto; width: 400px; ">
                         <div class="card-body">
                             <h2 class="mb-0 text-center">
                                 <img src="./img/discord-icon.svg" height="38">
@@ -54,7 +54,9 @@
                 </div>
                 
                 <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                    Loading...
+                    <div class="row">
+                        Loading...
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                     
@@ -83,22 +85,24 @@
         .then(function (response) {
 
             const template = `
-                <div class="card justify-content-center mb-2">
-                    <div class="card-body">
-                        <h2 class="mb-0 text-center">
-                            <span> {{CLAN_NAME}}</span>
-                        </h2>
+                <div class="col-6" >
+                    <div class="card justify-content-center mb-2">
+                        <div class="card-body">
+                            <h2 class="mb-0 text-center">
+                                <span> {{CLAN_NAME}}</span>
+                            </h2>
 
-                        <div>{{DESCRIPTION}}</div>
+                            <div>{{DESCRIPTION}}</div>
 
-                        <div class="float-end mt-3 members-count">
-                            {{MEMBERS-COUNT}} members
+                            <div class="float-end mt-3 members-count">
+                                {{MEMBERS-COUNT}} members
+                            </div>
+                            <!-- Click the button to copy the text inside the textarea. Put approriate bootstrap class with clipboard icon.-->
+                            <button class="btn btn-primary mb-3 mt-3 float-start applicationButton" data-id="{{ROLE_ID}}">
+                                <i class="far fa-clipboard me-2"></i> <span class="applicationText">Apply</span>
+                            </button>
+
                         </div>
-                        <!-- Click the button to copy the text inside the textarea. Put approriate bootstrap class with clipboard icon.-->
-                        <button class="btn btn-primary mb-3 mt-3 float-start applicationButton" data-id="{{ROLE_ID}}">
-                            <i class="far fa-clipboard me-2"></i> <span class="applicationText">Apply</span>
-                        </button>
-
                     </div>
                 </div>
             `;
@@ -109,7 +113,7 @@
 
                 //remove loading...
                 if (i === 0){
-                    document.querySelector("#v-pills-profile").innerHTML = "";
+                    document.querySelector("#v-pills-profile>div").innerHTML = "";
 
                 }
                 let newTemplate = template;
@@ -140,7 +144,7 @@
             
 
                 console.log(faction);
-                document.querySelector("#v-pills-profile").innerHTML += newTemplate;
+                document.querySelector("#v-pills-profile>div").innerHTML += newTemplate;
             });
 
 
