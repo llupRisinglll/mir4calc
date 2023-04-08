@@ -79,6 +79,24 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Confirmation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to leave the faction?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary modal-close" data-bs-dismiss="modal">No, close!</button>
+            <button type="button" class="btn btn-primary modal-confirm">Yes, I am sure</button>
+        </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
     let userDetails = localStorage.getItem("userDetails");
@@ -170,6 +188,10 @@
                     if (faction.isMember){
                         document.querySelector(`[data-id="${faction.roleid}"]`).classList = "btn btn-danger mb-3 mt-3 float-start leaveFactionButton";
                         document.querySelector(`[data-id="${faction.roleid}"]`).querySelector(".applicationText").innerHTML = "Leave Faction";
+
+                        // add this attribute to the button, data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                        document.querySelector(`[data-id="${faction.roleid}"]`).setAttribute("data-bs-toggle", "modal");
+                        document.querySelector(`[data-id="${faction.roleid}"]`).setAttribute("data-bs-target", "#staticBackdrop");
 
                         // change the icon to fa-times
                         document.querySelector(`[data-id="${faction.roleid}"]`).querySelector("i").classList = "fa fa-times me-2";
@@ -314,16 +336,92 @@
 
         // check if the clicked element has class leaveFactionButton
         if (target.matches(".leaveFactionButton")) {
+            const modal = document.querySelector("#staticBackdrop");
 
-            // look for .applicationText inside this element
-            target.querySelector(".applicationText").innerHTML = "Leaving...";
-            target.querySelector("i").classList = "fa fa-spinner fa-spin me-2";
+            // add the id to the modal
+            modal.setAttribute("data-id", target.getAttribute("data-id"));
 
-            setTimeout(() => {
-                target.querySelector(".applicationText").innerHTML = "Apply";
-                target.querySelector("i").classList = "far fa-clipboard me-2";
-                target.classList = "btn btn-primary mb-3 mt-3 float-start applicationButton";
-            }, 1000);
+            // function to remove data-id attribute from modal
+            function removeDataId() {
+                modal.removeAttribute("data-id");
+            }
+
+            function leaveFaction() {
+                // Change the text of the .modal-confirm button to "Leaving..." and change the icon
+                modal.querySelector(".modal-confirm").innerHTML = "Leaving...";
+                
+                // Disable the button
+                modal.querySelector(".modal-confirm").setAttribute("disabled", true);
+                modal.querySelector(".modal-close").setAttribute("disabled", true);
+                modal.querySelector(".btn-close").setAttribute("disabled", true);
+
+
+                // TODO: API Requests here
+                setTimeout(function(){
+                    modal.querySelector(".btn-close").removeAttribute("disabled");
+
+                    // close the modal programmatically
+                    modal.querySelector(".btn-close").click();
+
+                    // Bring back the original text
+                    modal.querySelector(".modal-confirm").innerHTML = "Yes, I am sure";
+                    
+                    // enable the button
+                    modal.querySelector(".modal-confirm").removeAttribute("disabled");
+                    modal.querySelector(".modal-close").removeAttribute("disabled");
+
+
+                    // Change the text of the button to "Apply" and change the icon
+                    target.querySelector(".applicationText").innerHTML = "Apply";
+                    target.querySelector("i").classList = "far fa-clipboard me-2";
+                    target.classList = "btn btn-primary mb-3 mt-3 float-start applicationButton";
+
+
+                    // remove this attribute to the button, data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                    target.removeAttribute("data-bs-toggle");
+                    target.removeAttribute("data-bs-target");
+                    
+                }, 5000)
+            }
+
+            // add event listener to modal for when it's closed
+            modal.addEventListener("hidden.bs.modal", function(event) {
+                removeDataId();
+
+                // remove the event listener
+                modal.removeEventListener("hidden.bs.modal", removeDataId);
+            });
+
+            modal.querySelector(".modal-confirm").addEventListener("click", function(event) {
+                leaveFaction();
+
+                // remove the event listener 
+                modal.removeEventListener("hidden.bs.modal", removeDataId);
+
+                modal.querySelector(". modal-confirm").remove("click");
+            });
+
+
+            console.log(document.querySelector("#staticBackdrop").getAttribute("data-id"));
+
+            // // look for .applicationText inside this element
+            // target.querySelector(".applicationText").innerHTML = "Leaving...";
+            // target.querySelector("i").classList = "fa fa-spinner fa-spin me-2";
+
+            // setTimeout(() => {
+            //     target.querySelector(".applicationText").innerHTML = "Apply";
+            //     target.querySelector("i").classList = "far fa-clipboard me-2";
+            //     target.classList = "btn btn-primary mb-3 mt-3 float-start applicationButton";
+
+
+                        
+            //     // remove this attribute to the button, data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+            //     target.removeAttribute("data-bs-toggle");
+            //     target.removeAttribute("data-bs-target");
+
+            
+
+            // }, 1000);
         }
         
     });
