@@ -153,6 +153,16 @@ DiscordClient.on('ready', async () => {
             try {
                 await member.roles.remove(roleId);
                 console.log("Successfully removed role", role.name, "from", member.user.username);
+
+                // count the total number of roles the user has
+                const totalRoles = member.roles.cache.size;
+
+                // if the user has no more roles, add 957557428189282354 role
+                if (totalRoles < 2) {
+                    await member.roles.add("957557428189282354");
+                    console.log("Successfully added role", "Unassigned", "to", member.user.username);
+                }
+
                 return resolve([true, `Faction ${role.name} removed`]);
                 
 
