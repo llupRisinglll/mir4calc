@@ -213,6 +213,48 @@ router.post("/cancel", async (req, res) => {
     
 });
 
+router.post("/faction/leave", async (req, res) => {
+    const userDetail = req.user;
+
+    // Check if the user is a member of the faction
+    const userFaction = await UserFactions.findOne({
+        serverId: PKDServer,
+        discordId: userDetail.user.id,
+        roleIds: req.body.faction
+    });
+
+    if (!userFaction || userFaction.roleIds.length === 0 || !userFaction.roleIds.includes(req.body.faction)) {
+        res.json({
+            isSuccess: 0,
+            message: 'You are not a member of this faction. Try refreshing the page'
+        });
+        return;
+    }
+
+    try {
+        const [isSuccess, message] = await removeDiscordRole('816312384854687806', '951626056257900554');
+        
+        if (!isSuccess) 
+           return res.json({
+                isSuccess: 0,
+                message: "Failed to remove your role. Please try again later or contact the adminsitrator."
+            });
+
+        return res.json({
+            isSuccess: 1,
+            message
+        });
+
+    } catch (error) {
+        res.json({
+            isSuccess: 0,
+            message: "There was an error while removing your role. Please try again later or contact the adminsitrator."
+        })
+    }
+
+    
+});
+
 router.get("/factions", async(req, res) => {
 
     // fetch all faction_info and return it as json, do not include _id
@@ -262,14 +304,18 @@ router.get("/factions", async(req, res) => {
 app.get("*", (req, res) => {
     res.send("Nothing is here motherfucker!");
 }
+
 );
 
 // server listening 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 
+    setTimeout(async function(){
+        // const [isSuccess, message] = await removeDiscordRole('816312384854687806', '951626056257900554');
 
-
+        console.log(isSuccess, message);
+    }, 5000)
 });
 
 

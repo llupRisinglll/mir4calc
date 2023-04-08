@@ -1,4 +1,4 @@
-const { Client, IntentsBitField } = require('discord.js');
+const { Client, IntentsBitField} = require('discord.js');
 
 // load the .env file
 require('dotenv').config();
@@ -137,6 +137,37 @@ DiscordClient.on('ready', async () => {
             console.error(error);
         }
     });
+
+    /**
+     * A global function to remove a role from a user
+     * @param {String} discordId Discord ID of the user
+     * @param {String} roleId The role ID to remove
+     * @returns 
+     */
+    global.removeDiscordRole = async (discordId, roleId) => {
+        return new Promise(async (resolve, reject) => {
+            const guild  = DiscordClient.guilds.cache.get(process.env.PKD_SERVER);
+            const member = await guild.members.fetch(discordId);
+            const role = guild.roles.cache.get(roleId);
+
+            try {
+                await member.roles.remove(roleId);
+                console.log("Successfully removed role", role.name, "from", member.user.username);
+                return resolve([true, `Faction ${role.name} removed`]);
+                
+
+                // TODO: Update members count
+            } catch (error) {   
+                return resolve([false, error]);
+            }
+        });
+    };
+
+
+
+    
+
+
 });
 
 // Log our bot in using the token from https://discord.com/developers/applications
