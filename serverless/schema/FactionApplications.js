@@ -24,7 +24,7 @@ const ApplicationSchema = new mongoose.Schema({
     
     // Discord ID of the role that the user has applied for
     roleId: {
-        type: Number,
+        type: String,
         required: true,
     },
 

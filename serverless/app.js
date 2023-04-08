@@ -18,13 +18,15 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // import jwt
 const jwt = require("jsonwebtoken");
-const PKDServer = '912962966062764062';
+const PKDServer = process.env.PKD_SERVER;
 
 
 // set cronjob to use asia/singapore timezone
 process.env.TZ = 'Asia/Singapore';
 
 const app = express();
+
+const DiscordBotUtil = require("./utils/DiscordBotUtil");
 
 
 app.use(cors({
@@ -135,34 +137,13 @@ const auth = require("./middleware/auth");
 
 // import FactionApplications
 const FactionApplications = require('./schema/FactionApplications');
+const FactionInfo = require('./schema/FactionInfo');
 
 // group by routes and add prefix /api/v1
 
 const router = express.Router();
 
 app.use("/api/v1", auth, router);
-
-
-router.get("/applications", async (req, res) => {
-    const userDetail = req.user;
-
-
-    // get applications and return array of applications roleIds
-    const applications = await FactionApplications.find({
-        discordId: userDetail.user.id,
-        serverId: PKDServer
-    }).select('roleId -_id');
-
-    // reformat the applications array to be an array of roleId
-    const applicationsArray = applications.map(application => {
-        return application.roleId;
-    });
-
-    res.json({
-        isSuccess: 1,
-        applications: applicationsArray
-    });
-});
 
 router.post("/apply", async (req, res) => {
     const userDetail = req.user;
@@ -172,7 +153,7 @@ router.post("/apply", async (req, res) => {
     const existingApplication = await FactionApplications.findOne({
         serverId: PKDServer,
         discordId: userDetail.user.id,
-        roleId: faction
+        roleId: String(faction)
     });
 
     if (existingApplication) {
@@ -187,8 +168,8 @@ router.post("/apply", async (req, res) => {
         discordId: userDetail.user.id,
         discordUsername: userDetail.user.username,
         discordDiscriminator: userDetail.user.discriminator,
-        roleId: faction,
-        serverId: PKDServer
+        roleId: String(faction),
+        serverId: String(PKDServer)
     });
 
     try {
@@ -231,7 +212,41 @@ router.post("/cancel", async (req, res) => {
     
 });
 
+router.get("/factions", async(req, res) => {
+    // fetch all faction_info and return it as json, do not include _id
+    try {
+        const userDetail = req.user;
 
+        const factions = await FactionInfo.find({}, { projection: { _id: 0 } });
+
+        const applications = await FactionApplications.find({
+            discordId: userDetail.user.id,
+            serverId: PKDServer
+        }).select('roleId -_id');
+
+        const roleIdArray = applications.map(application => application.roleId);
+
+        const responseData = factions.map(faction => ({
+            ...faction.toObject(),
+            hasApplied: roleIdArray.includes(faction.roleid)
+        }));
+
+        res.status(200).json({
+            isSuccess: 1,
+            data: responseData
+        });
+    } catch (error) {
+        res.status(200).json({
+            isSuccess: 0,
+            message: "Something when wrong while trying to get faction informations, Please try again later"
+        })
+    }
+
+});
+
+
+// TODO: Recount when a user has been accepted, leave a faction
+// DiscordBotUtil.emit("recountMembers", null);
 
 app.get("*", (req, res) => {
     res.send("Nothing is here motherfucker!");
@@ -241,6 +256,9 @@ app.get("*", (req, res) => {
 // server listening 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
+
+
+
 });
 
 

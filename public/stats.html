@@ -11,14 +11,19 @@
 
     (async () => {
         const endPoint = '//mir4-serverless.appspot.com/api/v1/applications';
+        const factionEndpoint = '//mir4-serverless.appspot.com/api/v1/factions';
         
         try {
-            const applications = await axios.get(endPoint, {
-                headers: { 'x-access-token': userDetails.token}
+            const factions = await axios.get(factionEndpoint, {
+                headers: { 'x-access-token': userDetails.token }
             });
 
-            
-            const factions = await axios.get('/json/factions.json');
+
+            if (Boolean(factions.data.isSuccess) === false){
+                console.log(factions.data)
+                window.showToast("Something went wrong. Please refresh the page!");
+                return;
+            }
 
             const template = `
                     <div class="col-6" >
@@ -43,9 +48,8 @@
                     </div>
                 `;
 
-
                 // loop through the response.data and append to #v-pills-profile
-                factions.data.forEach(function(faction, i) {
+                factions.data.data.forEach(function(faction, i) {
 
                     // document.queryselector from template variable
                     document.querySelector
@@ -76,8 +80,8 @@
 
 
                     // Replace the members count
-                    if (faction.hasOwnProperty("members") && faction.members.length > 0){
-                        newTemplate = newTemplate.replace("{{MEMBERS-COUNT}}", faction.members.length);
+                    if (faction.hasOwnProperty("members_count") && faction.members_count > 0){
+                        newTemplate = newTemplate.replace("{{MEMBERS-COUNT}}", faction.members_count);
                     }else{
                         newTemplate = newTemplate.replace("{{MEMBERS-COUNT}}", "0");
                     }
@@ -89,7 +93,7 @@
 
 
                     // if faction.roleid is in applications.data.applications, then change the button text to "Cancel Application"
-                    if (applications.data.applications.includes(faction.roleid)){
+                    if (faction.hasApplied){
                         document.querySelector(`[data-id="${faction.roleid}"]`).classList = "btn btn-warning mb-3 mt-3 float-start cancelApplicationButton";
                         document.querySelector(`[data-id="${faction.roleid}"]`).querySelector(".applicationText").innerHTML = "Cancel Application";
 

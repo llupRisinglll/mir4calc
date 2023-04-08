@@ -7,6 +7,10 @@ const InfoSchema = new mongoose.Schema({
         required: true,
     },
 
+    prefix: {
+        type: String
+    },
+
     description: {
         type: String,
         required: false,
@@ -14,26 +18,26 @@ const InfoSchema = new mongoose.Schema({
 
     
     // Discord ID of the role that the user has applied for
-    roleId: {
-        type: Number,
+    roleid: {
+        type: String,
         required: true,
+        unique: true
     },
 
         
     // Automatically add this role when the user has the roleId
-    siblingRoleId: {
-        type: Number,
-        required: true,
+    siblingroleid: {
+        type: String,
     },
 
 
-    memberCount: {
+    members_count: {
         type: Number,
         default: 0
     }
 
 });
 
-const Info = mongoose.model('faction_info', InfoSchema);
+const Info = mongoose.model('faction_info', InfoSchema, 'faction_info');
 
 module.exports = Info;
