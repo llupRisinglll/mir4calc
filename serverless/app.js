@@ -138,6 +138,7 @@ const auth = require("./middleware/auth");
 // import FactionApplications
 const FactionApplications = require('./schema/FactionApplications');
 const FactionInfo = require('./schema/FactionInfo');
+const UserFactions = require("./schema/UserFactions");
 
 // group by routes and add prefix /api/v1
 
@@ -213,22 +214,31 @@ router.post("/cancel", async (req, res) => {
 });
 
 router.get("/factions", async(req, res) => {
+
     // fetch all faction_info and return it as json, do not include _id
     try {
         const userDetail = req.user;
+        let [factions, applications, myRoles] = await Promise.all([
+            FactionInfo.find({}, { projection: { _id: 0 } }),
+            FactionApplications.find({
+                discordId: userDetail.user.id,
+                serverId: PKDServer
+            }).select('roleId -_id'),
 
-        const factions = await FactionInfo.find({}, { projection: { _id: 0 } });
+            UserFactions.findOne({
+                discordId: userDetail.user.id,
+                serverId: PKDServer
+            }).select('roleIds -_id')
+        ])
 
-        const applications = await FactionApplications.find({
-            discordId: userDetail.user.id,
-            serverId: PKDServer
-        }).select('roleId -_id');
+        myRoles = myRoles ? myRoles.roleIds : [];
 
         const roleIdArray = applications.map(application => application.roleId);
-
+        
         const responseData = factions.map(faction => ({
             ...faction.toObject(),
-            hasApplied: roleIdArray.includes(faction.roleid)
+            isMember: myRoles.includes(faction.roleid),
+            hasApplied: roleIdArray.includes(faction.roleid),
         }));
 
         res.status(200).json({
@@ -238,7 +248,8 @@ router.get("/factions", async(req, res) => {
     } catch (error) {
         res.status(200).json({
             isSuccess: 0,
-            message: "Something when wrong while trying to get faction informations, Please try again later"
+            message: "Something when wrong while trying to get faction informations, Please try again later",
+            error: error.message
         })
     }
 

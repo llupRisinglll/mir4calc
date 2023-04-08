@@ -166,8 +166,17 @@
                     console.log(faction);
                     document.querySelector("#v-pills-profile>div").innerHTML += newTemplate;
 
+                    // if faction.isMember is true, then change the button text to "Leave Faction"
+                    if (faction.isMember){
+                        document.querySelector(`[data-id="${faction.roleid}"]`).classList = "btn btn-danger mb-3 mt-3 float-start leaveFactionButton";
+                        document.querySelector(`[data-id="${faction.roleid}"]`).querySelector(".applicationText").innerHTML = "Leave Faction";
 
-                    // if faction.roleid is in applications.data.applications, then change the button text to "Cancel Application"
+                        // change the icon to fa-times
+                        document.querySelector(`[data-id="${faction.roleid}"]`).querySelector("i").classList = "fa fa-times me-2";
+                        return;
+                    }
+
+
                     if (faction.hasApplied){
                         document.querySelector(`[data-id="${faction.roleid}"]`).classList = "btn btn-warning mb-3 mt-3 float-start cancelApplicationButton";
                         document.querySelector(`[data-id="${faction.roleid}"]`).querySelector(".applicationText").innerHTML = "Cancel Application";
