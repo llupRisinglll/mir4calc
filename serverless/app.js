@@ -240,6 +240,10 @@ router.post("/faction/leave", async (req, res) => {
                 message: "Failed to remove your role. Please try again later or contact the adminsitrator."
             });
 
+        //  Recount when a user has been accepted, leave a faction
+        // TODO: Add a rate limiter to the event
+        DiscordBotUtil.emit("recountMembers", null);
+        
         return res.json({
             isSuccess: 1,
             message
@@ -296,10 +300,6 @@ router.get("/factions", async(req, res) => {
     }
 
 });
-
-
-// TODO: Recount when a user has been accepted, leave a faction
-// DiscordBotUtil.emit("recountMembers", null);
 
 app.get("*", (req, res) => {
     res.send("Nothing is here motherfucker!");
