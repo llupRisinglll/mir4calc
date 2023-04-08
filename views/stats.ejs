@@ -143,12 +143,6 @@
 
                 // loop through the response.data and append to #v-pills-profile
                 factions.data.data.forEach(function(faction, i) {
-
-                    // document.queryselector from template variable
-                    document.querySelector
-
-                    console.log();
-
                     //remove loading...
                     if (i === 0){
                         document.querySelector("#v-pills-profile>div").innerHTML = "";
@@ -178,10 +172,7 @@
                     }else{
                         newTemplate = newTemplate.replace("{{MEMBERS-COUNT}}", "0");
                     }
-                    
-                
 
-                    console.log(faction);
                     document.querySelector("#v-pills-profile>div").innerHTML += newTemplate;
 
                     // if faction.isMember is true, then change the button text to "Leave Faction"
@@ -233,10 +224,9 @@
         }
 
 
-        const applyEndPoint = '//mir4-serverless.appspot.com/api/v1/apply';
-        const cancelEndPoint = '//mir4-serverless.appspot.com/api/v1/cancel';
-
-
+        const applyEndPoint = '//mir4-serverless.appspot.com/api/v1/faction/apply';
+        const cancelEndPoint = '//mir4-serverless.appspot.com/api/v1/faction/cancel';
+        const leaveEndpoint = "//mir4-serverless.appspot.com/api/v1/faction/leave";
 
         if (target.matches(".applicationButton")) {
             const dataId = target.getAttribute("data-id");
@@ -245,7 +235,6 @@
             // look for .applicationText inside this element
             target.querySelector(".applicationText").innerHTML = "Applying...";
             target.querySelector("i").classList = "fa fa-spinner fa-spin me-2";
-
 
             try {
                 const response = await axios.post(applyEndPoint, { faction: dataId }, {
@@ -346,7 +335,9 @@
                 modal.removeAttribute("data-id");
             }
 
-            function leaveFaction() {
+            const dataId = target.getAttribute("data-id");
+            
+            const leaveFaction = async () => {
                 // Change the text of the .modal-confirm button to "Leaving..." and change the icon
                 modal.querySelector(".modal-confirm").innerHTML = "Leaving...";
                 
@@ -355,33 +346,51 @@
                 modal.querySelector(".modal-close").setAttribute("disabled", true);
                 modal.querySelector(".btn-close").setAttribute("disabled", true);
 
+                try {
+                    const response = await axios.post(leaveEndpoint, { faction: dataId }, {
+                        headers: {
+                            'x-access-token': userDetails.token
+                        }
+                    });
 
-                // TODO: API Requests here
-                setTimeout(function(){
+                    if (Boolean(response.data.isSuccess) === false){
+                        window.showToast(response.data.message);
+
+                        // Bring back the original text
+                        target.querySelector(".applicationText").innerHTML = "Apply";
+                        target.querySelector("i").classList = "far fa-clipboard me-2";
+                        return;
+                    }
+
                     modal.querySelector(".btn-close").removeAttribute("disabled");
-
-                    // close the modal programmatically
-                    modal.querySelector(".btn-close").click();
-
-                    // Bring back the original text
-                    modal.querySelector(".modal-confirm").innerHTML = "Yes, I am sure";
                     
-                    // enable the button
-                    modal.querySelector(".modal-confirm").removeAttribute("disabled");
-                    modal.querySelector(".modal-close").removeAttribute("disabled");
+                } catch (error) {
+                    setTimeout(function () {
+                        window.showToast("Something went wrong while trying to send the request! Please try again later");
+                    }, 1000);
+                } 
+
+                // close boostrap modal programmatically not by clicking the button
+                bootstrap.Modal.getInstance(modal).hide();
+
+                // Bring back the original text
+                modal.querySelector(".modal-confirm").innerHTML = "Yes, I am sure";
+                
+                // enable the button
+                modal.querySelector(".modal-confirm").removeAttribute("disabled");
+                modal.querySelector(".modal-close").removeAttribute("disabled");
 
 
-                    // Change the text of the button to "Apply" and change the icon
-                    target.querySelector(".applicationText").innerHTML = "Apply";
-                    target.querySelector("i").classList = "far fa-clipboard me-2";
-                    target.classList = "btn btn-primary mb-3 mt-3 float-start applicationButton";
+                // Change the text of the button to "Apply" and change the icon
+                target.querySelector(".applicationText").innerHTML = "Apply";
+                target.querySelector("i").classList = "far fa-clipboard me-2";
+                target.classList = "btn btn-primary mb-3 mt-3 float-start applicationButton";
 
 
-                    // remove this attribute to the button, data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                    target.removeAttribute("data-bs-toggle");
-                    target.removeAttribute("data-bs-target");
-                    
-                }, 5000)
+                // remove this attribute to the button, data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                target.removeAttribute("data-bs-toggle");
+                target.removeAttribute("data-bs-target");
+                
             }
 
             // add event listener to modal for when it's closed
@@ -398,7 +407,7 @@
                 // remove the event listener 
                 modal.removeEventListener("hidden.bs.modal", removeDataId);
 
-                modal.querySelector(". modal-confirm").remove("click");
+                modal.querySelector(".modal-confirm").removeEventListener("click", leaveFaction);
             });
 
 

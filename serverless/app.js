@@ -146,7 +146,7 @@ const router = express.Router();
 
 app.use("/api/v1", auth, router);
 
-router.post("/apply", async (req, res) => {
+router.post("/faction/apply", async (req, res) => {
     const userDetail = req.user;
     const { faction } = req.body;
 
@@ -187,7 +187,7 @@ router.post("/apply", async (req, res) => {
     }
 });
 
-router.post("/cancel", async (req, res) => {
+router.post("/faction/cancel", async (req, res) => {
     const userDetail = req.user;
     const { faction } = req.body;
 
