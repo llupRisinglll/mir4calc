@@ -5,8 +5,8 @@
                 <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
                     aria-selected="true">Information</button>
-                <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile"
+                <button class="nav-link" id="v-pills-faction-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-faction" type="button" role="tab" aria-controls="v-pills-faction"
                     aria-selected="false">Factions</button>
 
                 <div class="mt-2">
@@ -53,7 +53,7 @@
 
                 </div>
                 
-                <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <div class="tab-pane fade show active" id="v-pills-faction" role="tabpanel" aria-labelledby="v-pills-faction-tab">
                     <div class="row">
                         <div class="d-flex justify-content-center">
                             <div class="spinner-border" role="status">
@@ -63,7 +63,31 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                    
+                    <div class="card justify-content-center" style="margin: auto; ">
+                        <div class="card-body">
+                            <h2 class="mb-0 text-center">
+                                <img src="./img/discord-icon.svg" height="38">
+                                <span> [FACTION NAME] </span>
+                            </h2>
+
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Join Requests</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Members</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Settings</button>
+                                </li>
+                              </ul>
+                              <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                              </div>
+                        </div>
+                    </div>
                     
                     // TODO: As a manager:
                     // TODO: Player's prefix and faction name
@@ -102,9 +126,11 @@
     let userDetails = localStorage.getItem("userDetails");
     userDetails = JSON.parse(userDetails);
 
+    const domainPrefix = '//mir4-serverless.appspot.com/api/v1/';
+
     (async () => {
-        const endPoint = '//mir4-serverless.appspot.com/api/v1/applications';
-        const factionEndpoint = '//mir4-serverless.appspot.com/api/v1/factions';
+        const endPoint = domainPrefix + 'applications';
+        const factionEndpoint = domainPrefix + 'factions';
         
         try {
             const factions = await axios.get(factionEndpoint, {
@@ -113,7 +139,6 @@
 
 
             if (Boolean(factions.data.isSuccess) === false){
-                console.log(factions.data)
                 window.showToast("Something went wrong. Please refresh the page!");
                 return;
             }
@@ -141,11 +166,11 @@
                     </div>
                 `;
 
-                // loop through the response.data and append to #v-pills-profile
+                // loop through the response.data and append to #v-pills-faction
                 factions.data.data.forEach(function(faction, i) {
                     //remove loading...
                     if (i === 0){
-                        document.querySelector("#v-pills-profile>div").innerHTML = "";
+                        document.querySelector("#v-pills-faction>div").innerHTML = "";
 
                     }
                     let newTemplate = template;
@@ -173,7 +198,7 @@
                         newTemplate = newTemplate.replace("{{MEMBERS-COUNT}}", "0");
                     }
 
-                    document.querySelector("#v-pills-profile>div").innerHTML += newTemplate;
+                    document.querySelector("#v-pills-faction>div").innerHTML += newTemplate;
 
                     // if faction.isMember is true, then change the button text to "Leave Faction"
                     if (faction.isMember){
@@ -207,12 +232,8 @@
 
     })();
 
-
-
-    // dynamic query selector inside #v-pills-profile
-
-    // change the event listener to target #v-pills-profile instead of .applicationButton
-    document.querySelector("#v-pills-profile").addEventListener("click", async function(event) {
+    // change the event listener to target #v-pills-faction instead of .applicationButton
+    document.querySelector("#v-pills-faction").addEventListener("click", async function(event) {
         // check if the clicked element has class applicationButton
 
         let target = event.target;
@@ -223,10 +244,9 @@
             target = parent;
         }
 
-
-        const applyEndPoint = '//mir4-serverless.appspot.com/api/v1/faction/apply';
-        const cancelEndPoint = '//mir4-serverless.appspot.com/api/v1/faction/cancel';
-        const leaveEndpoint = "//mir4-serverless.appspot.com/api/v1/faction/leave";
+        const applyEndPoint = domainPrefix + 'faction/apply';
+        const cancelEndPoint = domainPrefix + 'faction/cancel';
+        const leaveEndpoint = domainPrefix + "faction/leave";
 
         if (target.matches(".applicationButton")) {
             const dataId = target.getAttribute("data-id");
@@ -252,22 +272,11 @@
                     return;
                 }
                 
+                // Change the button text to "Cancel Application"
                 target.querySelector(".applicationText").innerHTML = "Cancel Application";
                 target.querySelector("i").classList = "fa fa-times me-2";
                 target.classList = "btn btn-warning mb-3 mt-3 float-start cancelApplicationButton";
                 return;
-
-
-                const LEAVE_FACTION_TEMPLATE = false; // TODO: Remove from here and just use in the renderings
-
-                if (LEAVE_FACTION_TEMPLATE) {
-                    target.querySelector(".applicationText").innerHTML = "Leave Faction";
-
-                    // change to leaving icon
-                    target.querySelector("i").classList = "fa fa-times me-2";
-                    target.classList = "btn btn-danger mb-3 mt-3 float-start leaveFactionButton";
-                    return
-                }
 
             } catch (error) {
                 // Bring back the original text
@@ -409,28 +418,6 @@
 
                 modal.querySelector(".modal-confirm").removeEventListener("click", leaveFaction);
             });
-
-
-            console.log(document.querySelector("#staticBackdrop").getAttribute("data-id"));
-
-            // // look for .applicationText inside this element
-            // target.querySelector(".applicationText").innerHTML = "Leaving...";
-            // target.querySelector("i").classList = "fa fa-spinner fa-spin me-2";
-
-            // setTimeout(() => {
-            //     target.querySelector(".applicationText").innerHTML = "Apply";
-            //     target.querySelector("i").classList = "far fa-clipboard me-2";
-            //     target.classList = "btn btn-primary mb-3 mt-3 float-start applicationButton";
-
-
-                        
-            //     // remove this attribute to the button, data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-            //     target.removeAttribute("data-bs-toggle");
-            //     target.removeAttribute("data-bs-target");
-
-            
-
-            // }, 1000);
         }
         
     });
