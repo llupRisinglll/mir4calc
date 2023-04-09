@@ -314,7 +314,7 @@ app.listen(port, () => {
     setTimeout(async function(){
         // const [isSuccess, message] = await removeDiscordRole('816312384854687806', '951626056257900554');
 
-        console.log(isSuccess, message);
+        // console.log(isSuccess, message);
     }, 5000)
 });
 
