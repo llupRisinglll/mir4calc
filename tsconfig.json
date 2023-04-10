@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"jsx": "react",
+		"reactNamespace": "JSX",
+		"outDir": "./build/js",
+		"allowJs": true,
+		"target": "es5",
+		"lib": ["es6", "dom"],
+		"esModuleInterop": true,
+		"removeComments": true,
+		"pretty": true,
+		"module": "commonjs",
+		"moduleResolution": "node"
+	},
+	"include": [
+		"./src/*"
+	],
+	"exclude": [
+		"./src/partial/*"
+	]
+}
