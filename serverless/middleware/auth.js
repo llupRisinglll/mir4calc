@@ -19,7 +19,7 @@ const verifyToken = (req, res, next) => {
 
         req.user = decoded;
     } catch (err) {
-        return res.send(err);
+        return res.status(401).send(err);
         return res.status(401).send("Invalid Token: "+process.env.JWT_SECRET +"..." + token );
     }
     return next();
