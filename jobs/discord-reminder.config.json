@@ -4,14 +4,18 @@
         "title": "Labyrinth BOSS Reminder - 10 minutes before [10 AM]",
         "message": ":mega: Attention @everyone! :rotating_light:\n\nIn just 10 minutes, the **Labyrinth World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
         "timeHour": 9,
-        "timeMinute": 50
+        "timeMinute": 50,
+		"server": "1126001440452771921",
+		"channel": "1126021863861141554"
     },
     
     {
         "title": "Valley BOSS Reminder - 10 minutes before [12 PM]",
         "message": ":mega: Attention @everyone! :rotating_light:\n\nIn just 10 minutes, the **Valley World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
         "timeHour": 11,
-        "timeMinute": 50
+        "timeMinute": 50,
+		"server": "1126001440452771921",
+		"channel": "1126021863861141554"
     },
 
 
@@ -19,7 +23,9 @@
         "title": "Labyrinth BOSS Reminder - 10 minutes before [8 PM]",
         "message": ":mega: Attention @everyone! :rotating_light:\n\nIn just 10 minutes, the **Labyrinth World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
         "timeHour": 19,
-        "timeMinute": 50
+        "timeMinute": 50,
+		"server": "1126001440452771921",
+		"channel": "1126021863861141554"
     },
 
     {
@@ -27,7 +33,9 @@
         "message": ":fire: Attention @everyone, the war in the valley is about to begin in less than 30 minutes. Kindly ensure that **the UA arrangements are in place**. :muscle:\n\n :bomb: While the battle rages on, please** take a screenshot to show your members** are present inside the valley. :camera_with_flash:\n\n:microphone2: Please **enter the appropriate voice channel** for real-time communication.\n\n:four_leaf_clover: Good luck to everyone! :fingers_crossed:",
         "timeHour": 21,
         "timeMinute": 30,
-        "day": 4
+        "day": 4,
+		"server": "1126001440452771921",
+		"channel": "1126021863861141554"
     },
 
     
@@ -35,7 +43,9 @@
         "title": "Valley BOSS Reminder - 10 minutes before [10 PM]",
         "message": ":mega: Attention @everyone! :rotating_light:\n\nIn just 10 minutes, the **Valley World BOSS** will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to fight or collect treasure boxes, everyone must be ready to participate. :muscle:",
         "timeHour": 21,
-        "timeMinute": 50
+        "timeMinute": 50,
+		"server": "1126001440452771921",
+		"channel": "1126021863861141554"
     },
 
 
@@ -44,7 +54,9 @@
         "message": ":fire: Attention @everyone, the war in the valley is now __ONGOING~__\n\n :bomb: While the battle rages on, please don't forget to** take a screenshot to show your members** are present inside the valley. :camera_with_flash: \n\n :microphone2: Please **enter the appropriate voice channel** for real-time communication.\n\n :four_leaf_clover: Good luck to everyone! :fingers_crossed:",
         "timeHour": 22,
         "timeMinute": 0,
-        "day": 4 
+        "day": 4 ,
+		"server": "1126001440452771921",
+		"channel": "1126021863861141554"
     },
 
 
@@ -53,7 +65,18 @@
         "message": ":mega: Attention @everyone! :rotating_light: \n\nIn just 10 minutes, the **Living Wraith** in the valley will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to defend the altar, everyone must be ready to participate and prioritize it. :muscle:",
         "timeHour": 21,
         "timeMinute": 50,
-        "day": 5
-    }
+        "day": 5,
+		"server": "1126001440452771921",
+		"channel": "1126021863861141554"
+    },
 
+    {
+        "title": "Tessttt",
+        "message": ":mega: Attention @everyone! :rotating_light: \n\nIn just 10 minutes, the **Living Wraith** in the valley will make an appearance. Please adhere to the current plan and stay alert for any emergency calls. If we need to defend the altar, everyone must be ready to participate and prioritize it. :muscle:",
+        "timeHour": 3,
+        "timeMinute": 50,
+        "day": 5,
+		"server": "1126001440452771921",
+		"channel": "1126021863861141554"
+    }
 ]
